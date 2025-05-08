@@ -1,0 +1,77 @@
+version: 0.1
+signatures:
+  - id: azure.storage.blob
+    description: "Azure Blob Storage Client"
+    vendor: "Microsoft"
+    product: "Azure"
+    service: "Blob Storage client"
+    tags: [storage, blob, paas]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "azure.storage.blob.BlobServiceClient"
+      javascript:
+        match: all
+        conditions:
+          - type: call
+            value: "@azure/storage-blob.BlobServiceClient"
+
+  - id: azure.cosmos
+    description: "Azure Cosmos DB Client"
+    vendor: "Microsoft"
+    product: "Azure"
+    service: "Cosmos DB client"
+    tags: [cosmos, database, nosql, paas]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "azure.cosmos.CosmosClient"
+      javascript:
+        match: all
+        conditions:
+          - type: call
+            value: "@azure/cosmos.CosmosClient"
+
+  - id: azure.cosmos.container
+    description: "Azure Cosmos DB Container Client"
+    vendor: "Microsoft"
+    product: "Azure"
+    service: "Cosmos DB Container client"
+    tags: [cosmos, database, container, paas]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "azure.cosmos.ContainerProxy"
+      javascript:
+        match: all
+        conditions:
+          - type: call
+            value: "@azure/cosmos.Container"
+
+  - id: azure.IAM
+    description: "Azure IAM services"
+    vendor: "Microsoft"
+    product: "Azure"
+    service: "IAM services"
+    tags: [keyvault, secrets, credentials, paas]
+    languages:
+      python:
+        match: any
+        conditions:
+         -
+            type: call
+            value: "azure.identity.DefaultAzureCredential"
+         - 
+            type: call
+            value: "azure.keyvault.secrets.SecretClient"
+      javascript:
+        match: all
+        conditions:
+          - type: call
+            value: "@azure/keyvault-secrets.SecretClient"
