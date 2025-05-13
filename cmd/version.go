@@ -1,10 +1,11 @@
-package main
+package cmd
 
 import (
 	"fmt"
 	"os"
 	runtimeDebug "runtime/debug"
 
+	"github.com/safedep/xbom/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +14,15 @@ var (
 	version string
 	commit  string
 )
+
+var xbomTool = common.ToolMetadata{
+	Name:                 "xbom",
+	Version:              version,
+	Purl:                 "pkg:golang/safedep/xbom@" + version,
+	InformationURI:       "https://github.com/safedep/xbom",
+	VendorName:           "SafeDep",
+	VendorInformationURI: "https://safedep.io",
+}
 
 func init() {
 	// Only use buildInfo if version wasn't set by ldflags, that is its being build by `go install`
@@ -25,7 +35,7 @@ func init() {
 	}
 }
 
-func newVersionCommand() *cobra.Command {
+func NewVersionCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "version",
 		Short: "Show version and build information",

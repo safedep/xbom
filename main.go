@@ -6,27 +6,14 @@ import (
 
 	"github.com/safedep/dry/log"
 	"github.com/safedep/dry/obs"
-	"github.com/safedep/xbom/pkg/common"
+	"github.com/safedep/xbom/cmd"
 	"github.com/spf13/cobra"
 )
 
-var (
-	verbose bool
-	debug   bool
-	logFile string
-)
-
-var xbomTool = common.ToolMetadata{
-	Name:                 "xbom",
-	Version:              version,
-	Purl:                 "pkg:golang/safedep/xbom@" + version,
-	InformationURI:       "https://github.com/safedep/xbom",
-	VendorName:           "Safedep",
-	VendorInformationURI: "https://safedep.io",
-}
+var verbose bool
 
 func main() {
-	cmd := &cobra.Command{
+	command := &cobra.Command{
 		Use:              "xbom [OPTIONS] COMMAND [ARG...]",
 		Short:            "[ Generate BOMs enriched with AI, ML, SaaS, Cloud and more ]",
 		TraverseChildren: true,
@@ -43,15 +30,13 @@ func main() {
 		log.InitCliLogger(obs.AppServiceName("xbom"), obs.AppServiceEnv("dev"))
 	})
 
-	cmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Show verbose logs")
-	cmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Show debug logs")
-	cmd.PersistentFlags().StringVarP(&logFile, "log", "l", "", "Write command logs to file, use '-' for stdout")
+	command.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Show verbose logs")
 
-	cmd.AddCommand(newVersionCommand())
-	cmd.AddCommand(newGenerateCommand())
-	cmd.AddCommand(newValidateCommand())
+	command.AddCommand(cmd.NewVersionCommand())
+	command.AddCommand(cmd.NewGenerateCommand())
+	command.AddCommand(cmd.NewValidateCommand())
 
-	if err := cmd.Execute(); err != nil {
+	if err := command.Execute(); err != nil {
 		os.Exit(1)
 	}
 }

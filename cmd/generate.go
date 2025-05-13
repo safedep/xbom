@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"fmt"
@@ -15,11 +15,11 @@ import (
 )
 
 var (
-	codePath            string
+	directory           string
 	cyclonedxReportPath string
 )
 
-func newGenerateCommand() *cobra.Command {
+func NewGenerateCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "generate",
 		Short: "Generate BOMs enriched with AI, ML, SaaS, Cloud and more",
@@ -34,9 +34,9 @@ func newGenerateCommand() *cobra.Command {
 		panic(err)
 	}
 
-	cmd.Flags().StringVarP(&codePath, "code", "C", wd,
-		"Source code for generating BOM")
-	cmd.Flags().StringVarP(&cyclonedxReportPath, "cdx", "", "",
+	cmd.Flags().StringVarP(&directory, "dir", "D", wd,
+		"Directory for analysing and generating BOM")
+	cmd.Flags().StringVarP(&cyclonedxReportPath, "bom", "", "",
 		"Generate CycloneDX BOM to file")
 
 	_ = cmd.MarkFlagRequired("cdx")
@@ -58,7 +58,7 @@ func generate() {
 }
 
 func internalGenerate() error {
-	log.Infof("Generating BOM for source - %s", codePath)
+	log.Infof("Generating BOM for source - %s", directory)
 
 	// provide grouping filters using signatures.LoadSignatures("microsoft", "azure", "servicebus")
 	signaturesToMatch, err := signatures.LoadAllSignatures()
@@ -70,7 +70,7 @@ func internalGenerate() error {
 	bomGenerator, err := bom.NewCycloneDXBomGenerator(bom.CycloneDXGeneratorConfig{
 		Tool:                     xbomTool,
 		Path:                     cyclonedxReportPath,
-		ApplicationComponentName: path.Base(codePath),
+		ApplicationComponentName: path.Base(directory),
 	})
 	if err != nil {
 		return fmt.Errorf("failed to create CycloneDX BOM generator: %w", err)
@@ -78,7 +78,7 @@ func internalGenerate() error {
 
 	workflow := codeanalysis.NewCodeAnalysisWorkflow(codeanalysis.CodeAnalysisWorkflowConfig{
 		Tool:              xbomTool,
-		SourcePath:        codePath,
+		SourcePath:        directory,
 		SignaturesToMatch: signaturesToMatch,
 		Callbacks: &codeanalysis.CodeAnalysisCallbackRegistry{
 			OnStart: func() error {
@@ -97,8 +97,15 @@ func internalGenerate() error {
 		},
 	})
 
-	workflow.Execute()
-	codeAnalysisFindings := workflow.Finish(true)
+	err = workflow.Execute()
+	if err != nil {
+		return fmt.Errorf("failed to execute code analysis workflow: %w", err)
+	}
+
+	codeAnalysisFindings, err := workflow.Finish(true)
+	if err != nil {
+		return fmt.Errorf("failed to finish code analysis workflow: %w", err)
+	}
 
 	bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
 	bomGenerator.Finish()

@@ -71,7 +71,7 @@ func (w *CodeAnalysisWorkflow) executeInternal() error {
 		return fmt.Errorf("failed to create tree walker: %w", err)
 	}
 
-	callgraphPlugin, err := w.SetupCallgraphPlugin()
+	callgraphPlugin, err := w.setupCallgraphPlugin()
 	if err != nil {
 		return fmt.Errorf("failed to setup callgraph plugin: %w", err)
 	}
@@ -92,7 +92,7 @@ func (w *CodeAnalysisWorkflow) executeInternal() error {
 	return nil
 }
 
-func (w *CodeAnalysisWorkflow) SetupCallgraphPlugin() (core.Plugin, error) {
+func (w *CodeAnalysisWorkflow) setupCallgraphPlugin() (core.Plugin, error) {
 	signatureMatcher, err := callgraph.NewSignatureMatcher(w.config.SignaturesToMatch)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create signature matcher: %w", err)
@@ -114,14 +114,18 @@ func (w *CodeAnalysisWorkflow) SetupCallgraphPlugin() (core.Plugin, error) {
 	return callgraph.NewCallGraphPlugin(callgraphCallback), nil
 }
 
-func (w *CodeAnalysisWorkflow) Finish(summarize bool) *CodeAnalysisFindings {
+func (w *CodeAnalysisWorkflow) Finish(summarize bool) (*CodeAnalysisFindings, error) {
 	if summarize {
-		w.summarize()
+		err := w.summarize()
+		if err != nil {
+			return nil, err
+		}
 	}
-	return &w.findings
+
+	return &w.findings, nil
 }
 
-func (w *CodeAnalysisWorkflow) summarize() {
+func (w *CodeAnalysisWorkflow) summarize() error {
 	// Create a table writer for signatures
 	sigTable := table.NewWriter()
 	sigTable.SetOutputMirror(os.Stdout)
@@ -178,4 +182,6 @@ func (w *CodeAnalysisWorkflow) summarize() {
 	}
 
 	sigTable.Render()
+
+	return nil
 }
