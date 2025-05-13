@@ -30,7 +30,7 @@ func getLogLevelFromEnv() logrus.Level {
 	case "panic":
 		return logrus.PanicLevel
 	default:
-		return logrus.WarnLevel // Default to Info level if the environment variable is not set or invalid.
+		return logrus.InfoLevel // Default to Info level if the environment variable is not set or invalid.
 	}
 }
 

@@ -101,7 +101,7 @@ func (w *CodeAnalysisWorkflow) SetupCallgraphPlugin() (core.Plugin, error) {
 	var callgraphCallback callgraph.CallgraphCallback = func(_ context.Context, cg *callgraph.CallGraph) error {
 		signatureMatches, err := signatureMatcher.MatchSignatures(cg)
 		if err != nil {
-			return fmt.Errorf("failed to match  signatures: %w", err)
+			return fmt.Errorf("failed to match signatures: %w", err)
 		}
 
 		w.findings.SignatureMatchResults = append(w.findings.SignatureMatchResults, signatureMatches...)

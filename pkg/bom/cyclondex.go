@@ -106,39 +106,77 @@ func NewCycloneDXBomGenerator(config CycloneDXGeneratorConfig) (*CycloneDXGenera
 
 // RecordCodeAnalysisFindings implements BomGenerator.
 func (c *CycloneDXGenerator) RecordCodeAnalysisFindings(findings *codeanalysis.CodeAnalysisFindings) error {
-	for _, signatureMatch := range findings.SignatureMatchResults {
-		service := cdx.Service{
-			BOMRef:      signatureMatch.MatchedSignature.GetId(),
-			Name:        signatureMatch.MatchedSignature.Product + " - " + signatureMatch.MatchedSignature.Service,
-			Description: signatureMatch.MatchedSignature.Description,
-			Properties:  &[]cdx.Property{},
-			Provider: &cdx.OrganizationalEntity{
-				Name: signatureMatch.MatchedSignature.GetVendor(),
+	for _, signatureMatchResult := range findings.SignatureMatchResults {
+		occurrences := &[]cdx.EvidenceOccurrence{}
+		for _, condition := range signatureMatchResult.MatchedConditions {
+			for _, evidence := range condition.Evidences {
+				metadata, exists := evidence.Metadata()
+				if exists {
+					*occurrences = append(*occurrences, cdx.EvidenceOccurrence{
+						Location: evidence.Namespace, // @TODO - Use signatureMatchResult.FilePath after code update
+						Line:     utils.PtrTo(int(metadata.StartLine + 1)),
+						Offset:   utils.PtrTo(int(metadata.StartColumn + 1)),
+					})
+				}
+			}
+		}
+
+		component := cdx.Component{
+			BOMRef:      signatureMatchResult.MatchedSignature.GetId(),
+			Name:        signatureMatchResult.MatchedSignature.Product + " - " + signatureMatchResult.MatchedSignature.Service,
+			Type:        cdx.ComponentTypeLibrary,
+			Description: signatureMatchResult.MatchedSignature.GetDescription(),
+			Publisher:   signatureMatchResult.MatchedSignature.GetVendor(),
+			Manufacturer: &cdx.OrganizationalEntity{
+				Name:   signatureMatchResult.MatchedSignature.GetVendor(),
+				BOMRef: signatureMatchResult.MatchedSignature.GetVendor(),
 			},
+			Evidence: &cdx.Evidence{
+				Identity: utils.PtrTo([]cdx.EvidenceIdentity{
+					{
+						Methods: utils.PtrTo([]cdx.EvidenceIdentityMethod{
+							{
+								Technique:  cdx.EvidenceIdentityTechniqueSourceCodeAnalysis,
+								Confidence: utils.PtrTo(float32(1.0)),
+							},
+						}),
+						Tools: utils.PtrTo([]cdx.BOMReference{
+							cdx.BOMReference(c.toolComponent.BOMRef),
+						}),
+					},
+				}),
+				Occurrences: occurrences,
+			},
+			Properties: &[]cdx.Property{},
 		}
 
-		if slices.Contains(signatureMatch.MatchedSignature.Tags, "ai") {
-			*service.Properties = append(*service.Properties, cdx.Property{
-				Name:  "ai",
-				Value: "true",
-			})
-		}
-		if slices.Contains(signatureMatch.MatchedSignature.Tags, "paas") {
-			*service.Properties = append(*service.Properties, cdx.Property{
-				Name:  "paas",
-				Value: "true",
-			})
-		}
-		if slices.Contains(signatureMatch.MatchedSignature.Tags, "saas") {
-			*service.Properties = append(*service.Properties, cdx.Property{
-				Name:  "saas",
-				Value: "true",
-			})
-		}
+		*component.Properties = append(*component.Properties, c.getKnownTaggedProperties(signatureMatchResult.MatchedSignature.Tags)...)
 
-		*c.bom.Services = append(*c.bom.Services, service)
+		*c.bom.Components = append(*c.bom.Components, component)
 	}
 	return nil
+}
+
+func (c *CycloneDXGenerator) getKnownTaggedProperties(tags []string) []cdx.Property {
+	knownTags := []string{
+		"ai",
+		"ml",
+		"iaas",
+		"paas",
+		"saas",
+	}
+
+	properties := []cdx.Property{}
+	for _, tag := range knownTags {
+		if slices.Contains(tags, tag) {
+			properties = append(properties, cdx.Property{
+				Name:  tag,
+				Value: "true",
+			})
+		}
+	}
+
+	return properties
 }
 
 func (r *CycloneDXGenerator) finaliseBom() {
