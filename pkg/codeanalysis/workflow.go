@@ -14,5 +14,5 @@ type CodeAnalysisWorkflowConfig struct {
 }
 
 type CodeAnalysisFindings struct {
-	SignatureMatchResults []callgraph.SignatureMatchResult
+	SignatureWiseMatchResults map[string][]callgraph.SignatureMatchResult
 }

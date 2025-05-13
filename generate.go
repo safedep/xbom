@@ -86,7 +86,7 @@ func internalGenerate() error {
 				return nil
 			},
 			OnFinish: func() error {
-				ui.StopSpinner("✅ Code analysis completed")
+				ui.StopSpinner("✅ Code analysis completed.")
 				return nil
 			},
 			OnErr: func(message string, err error) error {
@@ -97,13 +97,14 @@ func internalGenerate() error {
 		},
 	})
 
-	redirectLogToFile(logFile)
-
 	workflow.Execute()
 	codeAnalysisFindings := workflow.Finish(true)
 
 	bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
 	bomGenerator.Finish()
+
+	fmt.Println()
+	fmt.Printf("📄 BOM saved at %s\n", cyclonedxReportPath)
 
 	return nil
 }

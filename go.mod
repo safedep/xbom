@@ -6,8 +6,8 @@ require (
 	buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250505130535-49e4fdd3000a.1
 	github.com/CycloneDX/cyclonedx-go v0.9.2
 	github.com/jedib0t/go-pretty/v6 v6.6.7
-	github.com/safedep/code v0.0.0-20250508092746-dfb2daf0a757
-	github.com/safedep/dry v0.0.0-20250503192646-7368bcb4e650
+	github.com/safedep/code v0.0.0-20250513161430-3da0c16c0b53
+	github.com/safedep/dry v0.0.0-20250513161346-1fc9a2f2f53e
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0

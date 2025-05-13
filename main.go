@@ -2,14 +2,11 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"os"
 
 	"github.com/safedep/dry/log"
 	"github.com/safedep/dry/obs"
-	"github.com/safedep/dry/utils"
 	"github.com/safedep/xbom/pkg/common"
-	"github.com/safedep/xbom/pkg/common/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -43,7 +40,7 @@ func main() {
 	}
 
 	cobra.OnInitialize(func() {
-		log.InitZapLogger(obs.AppServiceName("xbom"), obs.AppServiceEnv("dev"))
+		log.InitCliLogger(obs.AppServiceName("xbom"), obs.AppServiceEnv("dev"))
 	})
 
 	cmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Show verbose logs")
@@ -56,20 +53,5 @@ func main() {
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
-	}
-}
-
-// Redirect to file or discard log if empty
-func redirectLogToFile(path string) {
-	logger.Debugf("Redirecting logger output to: %s", path)
-
-	if !utils.IsEmptyString(path) {
-		if path == "-" {
-			logger.MigrateTo(os.Stdout)
-		} else {
-			logger.LogToFile(path)
-		}
-	} else {
-		logger.MigrateTo(io.Discard)
 	}
 }

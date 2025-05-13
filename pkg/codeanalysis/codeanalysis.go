@@ -23,7 +23,7 @@ func NewCodeAnalysisWorkflow(config CodeAnalysisWorkflowConfig) *CodeAnalysisWor
 	return &CodeAnalysisWorkflow{
 		config: config,
 		findings: CodeAnalysisFindings{
-			SignatureMatchResults: []callgraph.SignatureMatchResult{},
+			SignatureWiseMatchResults: make(map[string][]callgraph.SignatureMatchResult),
 		},
 	}
 }
@@ -104,7 +104,9 @@ func (w *CodeAnalysisWorkflow) SetupCallgraphPlugin() (core.Plugin, error) {
 			return fmt.Errorf("failed to match signatures: %w", err)
 		}
 
-		w.findings.SignatureMatchResults = append(w.findings.SignatureMatchResults, signatureMatches...)
+		for _, signatureMatch := range signatureMatches {
+			w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id] = append(w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id], signatureMatch)
+		}
 
 		return nil
 	}
@@ -149,26 +151,28 @@ func (w *CodeAnalysisWorkflow) summarize() {
 	})
 
 	// Process the match data
-	for _, match := range w.findings.SignatureMatchResults {
-		for _, condition := range match.MatchedConditions {
-			for _, evidence := range condition.Evidences {
-				evidenceDetailString := "Unknown"
-				evidenceContent, exists := evidence.Metadata()
-				if exists {
-					evidenceDetailString = fmt.Sprintf("L%d:%d to\nL%d:%d",
-						evidenceContent.StartLine, evidenceContent.StartColumn,
-						evidenceContent.EndLine, evidenceContent.EndColumn)
-				}
+	for _, signatureResults := range w.findings.SignatureWiseMatchResults {
+		for _, match := range signatureResults {
+			for _, condition := range match.MatchedConditions {
+				for _, evidence := range condition.Evidences {
+					evidenceDetailString := "Unknown"
+					evidenceContent, exists := evidence.Metadata()
+					if exists {
+						evidenceDetailString = fmt.Sprintf("L%d:%d to\nL%d:%d",
+							evidenceContent.StartLine, evidenceContent.StartColumn,
+							evidenceContent.EndLine, evidenceContent.EndColumn)
+					}
 
-				conditionLocationString := fmt.Sprintf("%s: \n%s", condition.Condition.Type, condition.Condition.Value)
-				sigTable.AppendRow(table.Row{
-					match.MatchedSignature.Id,
-					match.MatchedLanguageCode,
-					conditionLocationString,
-					evidence.Namespace,
-					evidenceDetailString,
-				})
-				sigTable.AppendSeparator()
+					conditionLocationString := fmt.Sprintf("%s: \n%s", condition.Condition.Type, condition.Condition.Value)
+					sigTable.AppendRow(table.Row{
+						match.MatchedSignature.Id,
+						match.MatchedLanguageCode,
+						conditionLocationString,
+						evidence.Namespace,
+						evidenceDetailString,
+					})
+					sigTable.AppendSeparator()
+				}
 			}
 		}
 	}
