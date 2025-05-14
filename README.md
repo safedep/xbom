@@ -23,22 +23,20 @@ xbom generate --code /path/to/code --cdx /path/to/sbom.cdx.json
 
 This will generate a CycloneDX SBOM with AI components detected in the code base.
 
+## Supported Languages
+Currently, xBom supports the following programming languages:
 
-## Supported Ecosystems
-Currently, xBom supports the following package ecosystems:
-
-| Ecosystem | Status | Command |
-|-----------|--------|---------|
-| NPM       | ✅ Active | `pmg npm install <package>` |
-| PNPM      | ✅ Active | `pmg pnpm add <package>` |
-| PyPI      | 🚧 Planned | Coming soon |
-| Go        | 🚧 Planned | Coming soon |
+| Language | Status |
+|-----------|--------|
+| Python      | ✅ Active |
 
 ## Limitations
 
 `xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a SBOM for library dependencies, you can use [vet](https://github.com/safedep/vet).
 
-## Contributing
+## Development
+
+
 
 ### Signatures
 
