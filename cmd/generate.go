@@ -10,6 +10,7 @@ import (
 	"github.com/safedep/xbom/internal/ui"
 	"github.com/safedep/xbom/pkg/bom"
 	"github.com/safedep/xbom/pkg/codeanalysis"
+	"github.com/safedep/xbom/pkg/reporter"
 	"github.com/safedep/xbom/pkg/signatures"
 	"github.com/spf13/cobra"
 )
@@ -102,10 +103,12 @@ func internalGenerate() error {
 		return fmt.Errorf("failed to execute code analysis workflow: %w", err)
 	}
 
-	codeAnalysisFindings, err := workflow.Finish(true)
+	codeAnalysisFindings, err := workflow.Finish()
 	if err != nil {
 		return fmt.Errorf("failed to finish code analysis workflow: %w", err)
 	}
+
+	reporter.SummariseCodeAnalysisFindings(codeAnalysisFindings)
 
 	bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
 	bomGenerator.Finish()
