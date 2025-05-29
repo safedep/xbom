@@ -12,13 +12,13 @@ Generate BOMs enriched with AI, SaaS and more using Static Code Analysis
 Generate an AI BOM from source code:
 
 ```bash
-xbom generate --code /path/to/code
+xbom generate --dir /path/to/code
 ```
 
 This will by default generate a console statistics of different AI products used in the code base.
 
 ```bash
-xbom generate --code /path/to/code --cdx /path/to/sbom.cdx.json
+xbom generate --dir /path/to/code --cdx /path/to/sbom.cdx.json
 ```
 
 This will generate a CycloneDX SBOM with AI components detected in the code base.
