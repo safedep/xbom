@@ -1,0 +1,79 @@
+version: 0.1
+signatures:
+  - id: openai.responses
+    description: "OpenAI AI Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "AI response"
+    tags: [ai, text]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.OpenAI.responses"
+
+  - id: openai.chat
+    description: "OpenAI AI Chat Completion"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Chat completion"
+    tags: [ai, text, chat]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.OpenAI.chat.completions"
+
+  - id: openai.async.responses
+    description: "OpenAI AI Async Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Async AI response"
+    tags: [ai, text, async]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AsyncOpenAI.responses"
+
+  - id: openai.async.realtime
+    description: "OpenAI Realtime AI Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Realtime AI conversational responses"
+    tags: [ai, text, realtime]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AsyncOpenAI.beta.realtime.connect"
+
+  - id: openai.files
+    description: "OpenAI files input"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "File data reading"
+    tags: [ai, text, files]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.OpenAI.files"
+
+  - id: openai.async.files
+    description: "OpenAI async files input"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Async file data reading"
+    tags: [ai, text, async, files]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AsyncOpenAI.files"
