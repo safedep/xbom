@@ -1,7 +1,7 @@
 version: 0.1
 signatures:
-  - id: openai.responses
-    description: "OpenAI AI Responses"
+  - id: openai.sync
+    description: "OpenAI AI Sync Responses"
     vendor: "OpenAI"
     product: "OpenAI API"
     service: "AI response"
@@ -11,22 +11,9 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "openai.OpenAI.responses"
+            value: "openai.OpenAI"
 
-  - id: openai.chat
-    description: "OpenAI AI Chat Completion"
-    vendor: "OpenAI"
-    product: "OpenAI API"
-    service: "Chat completion"
-    tags: [ai, text, chat]
-    languages:
-      python:
-        match: any
-        conditions:
-          - type: call
-            value: "openai.OpenAI.chat.completions"
-
-  - id: openai.async.responses
+  - id: openai.async
     description: "OpenAI AI Async Responses"
     vendor: "OpenAI"
     product: "OpenAI API"
@@ -37,43 +24,17 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "openai.AsyncOpenAI.responses"
+            value: "openai.AsyncOpenAI"
 
-  - id: openai.async.realtime
-    description: "OpenAI Realtime AI Responses"
-    vendor: "OpenAI"
-    product: "OpenAI API"
-    service: "Realtime AI conversational responses"
-    tags: [ai, text, realtime]
+  - id: openai.azure
+    description: "Azure OpenAI AI Responses"
+    vendor: "Azure OpenAI"
+    product: "Azure OpenAI API"
+    service: "AI response"
+    tags: [ai, text, azure]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "openai.AsyncOpenAI.beta.realtime.connect"
-
-  - id: openai.files
-    description: "OpenAI files input"
-    vendor: "OpenAI"
-    product: "OpenAI API"
-    service: "File data reading"
-    tags: [ai, text, files]
-    languages:
-      python:
-        match: any
-        conditions:
-          - type: call
-            value: "openai.OpenAI.files"
-
-  - id: openai.async.files
-    description: "OpenAI async files input"
-    vendor: "OpenAI"
-    product: "OpenAI API"
-    service: "Async file data reading"
-    tags: [ai, text, async, files]
-    languages:
-      python:
-        match: any
-        conditions:
-          - type: call
-            value: "openai.AsyncOpenAI.files"
+            value: "openai.AzureOpenAI"
