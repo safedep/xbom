@@ -1,0 +1,40 @@
+version: 0.1
+signatures:
+  - id: openai.sync
+    description: "OpenAI AI Sync Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "AI response"
+    tags: [ai, text]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.OpenAI"
+
+  - id: openai.async
+    description: "OpenAI AI Async Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Async AI response"
+    tags: [ai, text, async]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AsyncOpenAI"
+
+  - id: openai.azure
+    description: "Azure OpenAI AI Responses"
+    vendor: "Azure OpenAI"
+    product: "Azure OpenAI API"
+    service: "AI response"
+    tags: [ai, text, azure]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AzureOpenAI"
