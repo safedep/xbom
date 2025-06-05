@@ -358,7 +358,7 @@ signatures:
     vendor: "Langchain"
     product: "Langchain Core Library"
     service: "Vector Stores"
-    tags: [ai, vectore-stores, langchain, langchain-core]
+    tags: [ai, vector-stores, langchain, langchain-core]
     languages:
       python:
         match: any
