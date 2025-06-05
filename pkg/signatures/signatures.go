@@ -15,9 +15,9 @@ import (
 // signature file namespace - `signatures/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
 // Examples:
 // ```
-// signatures/openai/api/sdk.yml
-// signatures/google/gcp/vertexai.yml
-// signatures/amazon/aws/bedrock.yml
+// signatures/data/openai/api/sdk.yml
+// signatures/data/google/gcp/vertexai.yml
+// signatures/data/amazon/aws/bedrock.yml
 // ```
 
 //go:embed data

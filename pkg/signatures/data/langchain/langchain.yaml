@@ -1,4 +1,5 @@
 version: 0.1
+# Docs: https://api.python.langchain.com/en/latest/langchain_api_reference.html#module-langchain.storage
 signatures:
   - id: langchain.agents
     description: "Agent is a class that uses an LLM to choose a sequence of actions to take"
