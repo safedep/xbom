@@ -13,7 +13,7 @@ signatures:
           - type: call
             value: "azure.servicebus.ServiceBusClient"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
             value: "@azure/service-bus.ServiceBusClient"

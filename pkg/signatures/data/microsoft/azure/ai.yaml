@@ -1,37 +1,37 @@
 version: 0.1
 signatures:
   - id: azure.vision
-    description: "Azure Computer Vision Client"
+    description: "Azure Computer Vision"
     vendor: "Microsoft"
     product: "Azure"
-    service: "Vision client"
+    service: "Azure Vision"
     tags: [vision, image-analysis, ai, saas]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "azure.ai.vision.ContentAnalysisClient"
+            value: "azure.ai.vision.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/ai-vision-image-analysis.ImageAnalysisClient"
+            value: "@azure-rest/ai-vision-image-analysis.*"
 
   - id: azure.translator
-    description: "Azure Translator Client"
+    description: "Azure Text Translator"
     vendor: "Microsoft"
     product: "Azure"
-    service: "Translator client"
+    service: "Azure Translation"
     tags: [translate, nlp, language, ai, saas]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "azure.ai.translation.text.TextTranslationClient"
+            value: "azure.ai.translation.text.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/ai-translation-text.TextTranslationClient"
+            value: "@azure-rest/ai-translation-text.*"

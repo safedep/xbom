@@ -1,5 +1,8 @@
 version: 0.1
-# Docs: https://api.python.langchain.com/en/latest/core_api_reference.html
+
+# References -
+# https://api.python.langchain.com/en/latest/core_api_reference.html
+
 signatures:
   - id: langchain_core.agents
     description: "Schema definitions for representing agent actions, observations, and return values"
@@ -12,7 +15,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.agents"
+            value: "langchain_core.agents.*"
 
   - id: langchain_core.beta
     description: "Some beta features that are not yet ready for production"
@@ -25,7 +28,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.beta"
+            value: "langchain_core.beta.*"
 
   - id: langchain_core.document_loaders
     description: "Document loaders"
@@ -38,7 +41,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.document_loaders"
+            value: "langchain_core.document_loaders.*"
 
   - id: langchain_core.documents
     description: "Document module is a collection of classes that handle documents and their transformations."
@@ -51,7 +54,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.documents"
+            value: "langchain_core.documents.*"
 
   - id: langchain_core.embeddings
     description: "Interface for embedding models."
@@ -64,7 +67,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.embeddings"
+            value: "langchain_core.embeddings.*"
 
   - id: langchain_core.example_selectors
     description: "Example selector implements logic for selecting examples to include them in prompts. This allows us to select examples that are most relevant to the input."
@@ -77,7 +80,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.example_selectors"
+            value: "langchain_core.example_selectors.*"
 
 
   - id: langchain_core.exceptions
@@ -91,7 +94,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.exceptions"
+            value: "langchain_core.exceptions.*"
 
   - id: langchain_core.globals
     description: "Global values and configuration that apply to all of LangChain."
@@ -104,7 +107,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.globals"
+            value: "langchain_core.globals.*"
 
   - id: langchain_core.graph_vectorstores
     description: "Langchain Core graph vector store interface"
@@ -117,7 +120,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.graph_vectorstores"
+            value: "langchain_core.graph_vectorstores.*"
 
   - id: langchain_core.indexing
     description: "Code to help indexing data into a vectorstore. This package contains helper logic to help deal with indexing data into a vectorstore while avoiding duplicated content and over-writing content if it’s unchanged."
@@ -130,7 +133,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.indexing"
+            value: "langchain_core.indexing.*"
 
   - id: langchain_core.language_models
     description: "Language Model is a type of model that can generate text or complete text prompts."
@@ -143,7 +146,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.language_models"
+            value: "langchain_core.language_models.*"
 
   - id: langchain_core.load
     description: "Load module helps with serialization and deserialization."
@@ -156,7 +159,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.load"
+            value: "langchain_core.load.*"
 
   - id: langchain_core.memory
     description: "Memory maintains Chain state, incorporating context from past runs"
@@ -169,7 +172,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.memory"
+            value: "langchain_core.memory.*"
 
   - id: langchain_core.messages
     description: "Messages are objects used in prompts and chat conversations."
@@ -182,7 +185,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.messages"
+            value: "langchain_core.messages.*"
 
   - id: langchain_core.output_parsers
     description: "OutputParser classes parse the output of an LLM call."
@@ -195,7 +198,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.output_parsers"
+            value: "langchain_core.output_parsers.*"
 
   - id: langchain_core.output
     description: "Output classes are used to represent the output of a language model call and the output of a chat."
@@ -208,7 +211,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.output"
+            value: "langchain_core.output.*"
 
   - id: langchain_core.prompt_values
     description: "Prompt values for language model prompts. Prompt values are used to represent different pieces of prompts. They can be used to represent text, images, or chat message pieces."
@@ -221,7 +224,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.prompt_values"
+            value: "langchain_core.prompt_values.*"
 
   - id: langchain_core.prompt
     description: "Prompt is the input to the model. Prompt is often constructed from multiple components and prompt values. Prompt classes and functions make constructing"
@@ -234,7 +237,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.prompt"
+            value: "langchain_core.prompt.*"
 
   - id: langchain_core.rate_limiters
     description: "Interface for a rate limiter and an in-memory rate limiter."
@@ -247,7 +250,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.rate_limiters"
+            value: "langchain_core.rate_limiters.*"
 
   - id: langchain_core.retrievers
     description: "Retriever class returns Documents given a text query."
@@ -260,7 +263,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.retrievers"
+            value: "langchain_core.retrievers.*"
 
   - id: langchain_core.runnables
     description: "LangChain Runnable and the LangChain Expression Language (LCEL). The LangChain Expression Language (LCEL) offers a declarative method to build production-grade programs that harness the power of LLMs."
@@ -273,7 +276,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.runnables"
+            value: "langchain_core.runnables.*"
 
   - id: langchain_core.stores
     description: "Store implements the key-value stores and storage helpers."
@@ -286,7 +289,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.stores"
+            value: "langchain_core.stores.*"
 
   - id: langchain_core.structured_query
     description: "Internal representation of a structured query language."
@@ -299,7 +302,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.structured_query"
+            value: "langchain_core.structured_query.*"
 
   - id: langchain_core.sys_info
     description: "sys_info prints information about the system and langchain packages for debugging purposes."
@@ -312,7 +315,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.sys_info"
+            value: "langchain_core.sys_info.*"
 
   - id: langchain_core.tools
     description: "Tools are classes that an Agent uses to interact with the world."
@@ -325,7 +328,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.tools"
+            value: "langchain_core.tools.*"
 
   - id: langchain_core.tracers
     description: "Tracers are classes for tracing runs."
@@ -338,7 +341,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.tracers"
+            value: "langchain_core.tracers.*"
 
   - id: langchain_core.utils
     description: "Utility functions for LangChain."
@@ -351,7 +354,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.utils"
+            value: "langchain_core.utils.*"
 
   - id: langchain_core.vectorstores
     description: "LangChain Core vector store"
@@ -364,4 +367,4 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "langchain_core.vectorstores"
+            value: "langchain_core.vectorstores.*"
