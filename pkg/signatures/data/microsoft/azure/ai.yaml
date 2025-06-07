@@ -1,4 +1,11 @@
 version: 0.1
+
+# References -
+# https://learn.microsoft.com/en-us/javascript/api/overview/azure/ai-vision-image-analysis-rest-readme
+# https://pypi.org/project/azure-ai-vision-imageanalysis/
+# https://learn.microsoft.com/en-us/python/api/overview/azure/ai-translation-text-readme?view=azure-python&preserve-view=true
+# https://learn.microsoft.com/en-us/javascript/api/overview/azure/ai-translation-text-rest-readme?view=azure-node-preview
+
 signatures:
   - id: azure.vision
     description: "Azure Computer Vision"
