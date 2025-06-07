@@ -62,7 +62,7 @@ signatures:
     tags: [powerbi, visualization, dashboard, microsoft, saas]
     languages:
       javascript:
-        match: all
+        match: any
         conditions:
           - type: import
             value: "powerbi-client"

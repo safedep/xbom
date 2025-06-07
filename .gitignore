@@ -27,5 +27,8 @@ go.work.sum
 bin/
 .vscode/
 
-## xBom Binary
+# xBom Binary
 xbom
+
+# MacOS specific files
+**/.DS_Store

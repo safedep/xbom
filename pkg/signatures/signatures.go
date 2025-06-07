@@ -12,12 +12,12 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// signature file namespace - `signatures/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
+// signature file namespace - `pkg/signatures/data/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
 // Examples:
 // ```
-// signatures/data/openai/api/sdk.yml
-// signatures/data/google/gcp/vertexai.yml
-// signatures/data/amazon/aws/bedrock.yml
+// pkg/signatures/data/openai/api/sdk.yml
+// pkg/signatures/data/google/gcp/vertexai.yml
+// pkg/signatures/data/amazon/aws/bedrock.yml
 // ```
 
 //go:embed data

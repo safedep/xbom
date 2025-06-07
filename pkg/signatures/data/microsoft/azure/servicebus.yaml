@@ -1,22 +1,29 @@
 version: 0.1
+
+# References -
+# https://learn.microsoft.com/en-us/javascript/api/%40azure/service-bus/?view=azure-node-latest
+# https://learn.microsoft.com/en-us/python/api/overview/azure/servicebus-readme?view=azure-python
+# https://azuresdkdocs.z19.web.core.windows.net/python/azure-servicebus/latest/azure.servicebus.html#azure.servicebus.ServiceBusSender
+# https://azuresdkdocs.z19.web.core.windows.net/python/azure-servicebus/latest/azure.servicebus.html#azure.servicebus.ServiceBusReceiver
+
 signatures:
   - id: azure.servicebus
-    description: "Azure Service Bus Client"
+    description: "Azure Service Bus"
     vendor: "Microsoft"
     product: "Azure"
-    service: "Service Bus client"
+    service: "Azure Service Bus"
     tags: [servicebus, messaging, paas]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "azure.servicebus.ServiceBusClient"
+            value: "azure.servicebus.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/service-bus.ServiceBusClient"
+            value: "@azure/service-bus.*"
 
   - id: azure.servicebus.sender
     description: "Azure Service Bus Sender Client"

@@ -40,17 +40,17 @@ Currently, xBom supports the following programming languages:
 
 ### Signatures
 
-xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/data/` following file naming convention - `signatures/data/$vendor/$product/$service.yml` You can generate a new signature file using command -
+xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `pkg/signatures/data/` following file naming convention - `pkg/signatures/data/$vendor/$product/$service.yml` You can generate a new signature file using command -
 
 ```bash
 xbom signature new --vendor <vendor> --product <product> --service <name>
 ```
 
-This will generate a new YAML (if it doesn't exist) file in `signatures/data/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
+This will generate a new YAML (if it doesn't exist) file in `pkg/signatures/data/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
 
 Examples:
 
 ```
-signatures/data/microsoft/azure/ai.yml
-signatures/data/microsoft/office/integrations.yml
+pkg/signatures/data/microsoft/azure/ai.yml
+pkg/signatures/data/microsoft/office/integrations.yml
 ```

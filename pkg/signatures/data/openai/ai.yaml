@@ -1,5 +1,28 @@
 version: 0.1
+# References -
+# https://pypi.org/project/openai/
+# https://github.com/openai/openai-java
+# https://learn.microsoft.com/en-us/java/api/overview/azure/ai-openai-readme?view=azure-java-preview
+
 signatures:
+  - id: openai.client
+    description: "OpenAI client"
+    vendor: "OpenAI"
+    product: "OpenAI"
+    service: "AI client"
+    tags: [ai, text]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.*"
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.openai.client.*"
+
   - id: openai.sync
     description: "OpenAI AI Sync Responses"
     vendor: "OpenAI"
@@ -38,3 +61,12 @@ signatures:
         conditions:
           - type: call
             value: "openai.AzureOpenAI"
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.azure.ai.openai.OpenAIClientBuilder"
+          - type: call
+            value: "com.azure.ai.openai.OpenAIAsyncClient"
+          - type: call
+            value: "com.azure.ai.openai.OpenAIClient"
