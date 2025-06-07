@@ -27,10 +27,8 @@ go.work.sum
 bin/
 .vscode/
 
-<<<<<<< Updated upstream
-## xBom Binary
+# xBom Binary
 xbom
-=======
+
 # MacOS specific files
 **/.DS_Store
->>>>>>> Stashed changes
