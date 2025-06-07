@@ -91,17 +91,6 @@ func (w *CodeAnalysisWorkflow) executeInternal() error {
 }
 
 func (w *CodeAnalysisWorkflow) setupCallgraphPlugin() (core.Plugin, error) {
-	fmt.Println("All signatures:")
-	for _, sig := range w.config.SignaturesToMatch {
-		fmt.Println("Signature ID:", sig.Id)
-		for lang, matchers := range sig.Languages {
-			fmt.Printf("  Language: %s, Match: %s\n", lang, matchers.Match)
-			for _, cond := range matchers.Conditions {
-				fmt.Printf("    - %s: %s\n", cond.Type, cond.Value)
-			}
-		}
-	}
-
 	signatureMatcher, err := callgraph.NewSignatureMatcher(w.config.SignaturesToMatch)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create signature matcher: %w", err)
