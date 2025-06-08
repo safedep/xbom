@@ -216,7 +216,12 @@ func (r *CycloneDXGenerator) Finish() error {
 	if err != nil {
 		return err
 	}
-	defer fd.Close()
+
+	defer func() {
+		if err := fd.Close(); err != nil {
+			log.Errorf("Failed to close file %s: %v", r.config.Path, err)
+		}
+	}()
 
 	err = cdx.NewBOMEncoder(fd, cdx.BOMFileFormatJSON).
 		SetPretty(true).
