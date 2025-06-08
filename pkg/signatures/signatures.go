@@ -12,16 +12,19 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// signature file namespace - `pkg/signatures/data/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
+// signature file namespace - `signatures/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
 // Examples:
 // ```
-// pkg/signatures/data/openai/api/sdk.yml
-// pkg/signatures/data/google/gcp/vertexai.yml
-// pkg/signatures/data/amazon/aws/bedrock.yml
+// signatures/openai/api/sdk.yml
+// signatures/google/gcp/vertexai.yml
+// signatures/amazon/aws/bedrock.yml
 // ```
 
-//go:embed data
 var signatureFiles embed.FS
+
+func SetEmbeddedSignatureFS(files embed.FS) {
+	signatureFiles = files
+}
 
 type signatureFile struct {
 	Version    string                  `yaml:"version"`
@@ -36,8 +39,7 @@ type signatureFile struct {
 // If a vendor is not specified, it will load all the signatures
 func LoadSignatures(vendor string, product string, service string) ([]*callgraphv1.Signature, error) {
 	isSingleSignatureFile := false
-
-	subDirs := []string{"data", vendor}
+	subDirs := []string{".", vendor}
 	if product != "" {
 		subDirs = append(subDirs, product)
 		if service != "" {

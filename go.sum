@@ -86,6 +86,8 @@ github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/safedep/code v0.0.0-20250513161430-3da0c16c0b53 h1:FU3m6LEBDUaHTBbTNpTXGRV8W26F3JxSPwCUJL6hY08=
 github.com/safedep/code v0.0.0-20250513161430-3da0c16c0b53/go.mod h1:a6jPH1Yy0jLg5C1Ud/1GjGoqzH9gMg7WFdxGvbBAmVA=
+github.com/safedep/code v0.0.0-20250607125516-0961a0fa85bd h1:QOEVAPFakgjdOTgKXa8ae1u9rImxEQm8lvFJXWkaTNg=
+github.com/safedep/code v0.0.0-20250607125516-0961a0fa85bd/go.mod h1:FultRk28rsC/hfgSIeEGaNPk6dMKdwvpva7A0bIFDTA=
 github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429 h1:jSeNB9oO0tSPUHIc1dZtmdAl3Hy6z8QIaxA2x9ep5T8=
 github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429/go.mod h1:nU5w9Xb5Ja2wq5PU/K8r8r1Dc25ApJXKKqvwju99G2w=
 github.com/smacker/go-tree-sitter v0.0.0-20240827094217-dd81d9e9be82 h1:6C8qej6f1bStuePVkLSFxoU22XBS165D3klxlzRg8F4=
