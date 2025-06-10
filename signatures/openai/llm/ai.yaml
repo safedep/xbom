@@ -10,7 +10,7 @@ signatures:
     vendor: "OpenAI"
     product: "OpenAI"
     service: "AI client"
-    tags: [ai, text]
+    tags: [ai, text, llm]
     languages:
       python:
         match: any
@@ -28,7 +28,7 @@ signatures:
     vendor: "OpenAI"
     product: "OpenAI API"
     service: "AI response"
-    tags: [ai, text]
+    tags: [ai, text, llm]
     languages:
       python:
         match: any
@@ -41,7 +41,7 @@ signatures:
     vendor: "OpenAI"
     product: "OpenAI API"
     service: "Async AI response"
-    tags: [ai, text, async]
+    tags: [ai, text, llm, async]
     languages:
       python:
         match: any
@@ -54,7 +54,7 @@ signatures:
     vendor: "Azure OpenAI"
     product: "Azure OpenAI API"
     service: "AI response"
-    tags: [ai, text, azure]
+    tags: [ai, text, llm, azure]
     languages:
       python:
         match: any
