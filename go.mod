@@ -3,7 +3,7 @@ module github.com/safedep/xbom
 go 1.24.3
 
 require (
-	buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250606064815-fafeb46ec6a1.1
+	buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250609130256-97e0a6d68a26.1
 	github.com/CycloneDX/cyclonedx-go v0.9.2
 	github.com/google/uuid v1.6.0
 	github.com/jedib0t/go-pretty/v6 v6.6.7
