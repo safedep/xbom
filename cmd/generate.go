@@ -90,10 +90,9 @@ func internalGenerate() error {
 				ui.StopSpinner("✅ Code analysis completed.")
 				return nil
 			},
-			OnErr: func(message string, err error) error {
+			OnErr: func(message string, err error) {
 				log.Errorf("Error in code analysis workflow: %s: %v", message, err)
 				ui.StopSpinner("❗Code analysis failed")
-				return nil
 			},
 		},
 	})
@@ -108,10 +107,20 @@ func internalGenerate() error {
 		return fmt.Errorf("failed to finish code analysis workflow: %w", err)
 	}
 
-	reporter.SummariseCodeAnalysisFindings(codeAnalysisFindings)
+	err = reporter.SummariseCodeAnalysisFindings(codeAnalysisFindings)
+	if err != nil {
+		return fmt.Errorf("failed to summarise code analysis findings: %w", err)
+	}
 
-	bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
-	bomGenerator.Finish()
+	err = bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
+	if err != nil {
+		return fmt.Errorf("failed to record code analysis findings in BOM: %w", err)
+	}
+
+	err = bomGenerator.Finish()
+	if err != nil {
+		return fmt.Errorf("failed to finish BOM generation: %w", err)
+	}
 
 	fmt.Println()
 	fmt.Printf("📄 BOM saved at %s\n", cyclonedxReportPath)

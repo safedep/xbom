@@ -1,58 +1,58 @@
 version: 0.1
 signatures:
   - id: azure.storage.blob
-    description: "Azure Blob Storage Client"
+    description: "Azure Blob Storage"
     vendor: "Microsoft"
     product: "Azure"
-    service: "Blob Storage client"
+    service: "Blob Storage"
     tags: [storage, blob, paas]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "azure.storage.blob.BlobServiceClient"
+            value: "azure.storage.blob.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/storage-blob.BlobServiceClient"
+            value: "@azure/storage-blob.*"
 
   - id: azure.cosmos
-    description: "Azure Cosmos DB Client"
+    description: "Azure Cosmos DB"
     vendor: "Microsoft"
     product: "Azure"
-    service: "Cosmos DB client"
+    service: "Cosmos DB"
     tags: [cosmos, database, nosql, paas]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "azure.cosmos.CosmosClient"
+            value: "azure.cosmos.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/cosmos.CosmosClient"
+            value: "@azure/cosmos.*"
 
   - id: azure.cosmos.container
-    description: "Azure Cosmos DB Container Client"
+    description: "Azure Cosmos DB Container"
     vendor: "Microsoft"
     product: "Azure"
-    service: "Cosmos DB Container client"
+    service: "Cosmos DB Container"
     tags: [cosmos, database, container, paas]
     languages:
       python:
         match: any
         conditions:
           - type: call
-            value: "azure.cosmos.ContainerProxy"
+            value: "azure.cosmos.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/cosmos.Container"
+            value: "@azure/cosmos.*"
 
   - id: azure.IAM
     description: "Azure IAM services"
@@ -64,14 +64,10 @@ signatures:
       python:
         match: any
         conditions:
-         -
-            type: call
-            value: "azure.identity.DefaultAzureCredential"
-         - 
-            type: call
-            value: "azure.keyvault.secrets.SecretClient"
+          - type: call
+            value: "azure.identity.*"
       javascript:
-        match: all
+        match: any
         conditions:
           - type: call
-            value: "@azure/keyvault-secrets.SecretClient"
+            value: "@azure/identity.*"

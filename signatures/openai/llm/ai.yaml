@@ -1,0 +1,72 @@
+version: 0.1
+# References -
+# https://pypi.org/project/openai/
+# https://github.com/openai/openai-java
+# https://learn.microsoft.com/en-us/java/api/overview/azure/ai-openai-readme?view=azure-java-preview
+
+signatures:
+  - id: openai.client
+    description: "OpenAI client"
+    vendor: "OpenAI"
+    product: "OpenAI"
+    service: "AI client"
+    tags: [ai, text, llm]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.*"
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.openai.client.*"
+
+  - id: openai.sync
+    description: "OpenAI AI Sync Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "AI response"
+    tags: [ai, text, llm]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.OpenAI"
+
+  - id: openai.async
+    description: "OpenAI AI Async Responses"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Async AI response"
+    tags: [ai, text, llm, async]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AsyncOpenAI"
+
+  - id: openai.azure
+    description: "Azure OpenAI AI Responses"
+    vendor: "Azure OpenAI"
+    product: "Azure OpenAI API"
+    service: "AI response"
+    tags: [ai, text, llm, azure]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "openai.AzureOpenAI"
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.azure.ai.openai.OpenAIClientBuilder"
+          - type: call
+            value: "com.azure.ai.openai.OpenAIAsyncClient"
+          - type: call
+            value: "com.azure.ai.openai.OpenAIClient"
