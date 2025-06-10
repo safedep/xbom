@@ -1,6 +1,6 @@
 module github.com/safedep/xbom
 
-go 1.24.1
+go 1.24.3
 
 require (
 	buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250606064815-fafeb46ec6a1.1
