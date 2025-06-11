@@ -227,7 +227,7 @@ signatures:
 
 
   - id: langchain_community.indexes
-    description: "Index is used to avoid writing duplicated content into the vectostore and to avoid over-writing content if it’s unchanged."
+    description: "Index is used to avoid writing duplicated content into the vector store and to avoid over-writing content if it’s unchanged."
     vendor: "Langchain"
     product: "Langchain Community Library"
     service: "Indexes"
