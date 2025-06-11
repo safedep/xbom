@@ -1,0 +1,35 @@
+name: Continuous Integration
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  run-test:
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Set up Go
+        uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568
+        with:
+          go-version: 1.24
+          check-latest: true
+
+      - name: Install dependencies
+        run: go mod download
+
+      - name: Run Tests
+        run: go test -coverprofile=coverage.txt -v ./...
+
+      - name: Upload Coverage
+        if: (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || github.event_name == 'push'
+        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
