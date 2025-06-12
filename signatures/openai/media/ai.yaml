@@ -2,7 +2,6 @@ version: 0.1
 # References -
 # https://pypi.org/project/openai/
 # https://github.com/openai/openai-java
-# https://learn.microsoft.com/en-us/java/api/overview/azure/ai-openai-readme?view=azure-java-preview
 
 signatures:
   - id: openai.image_generation
