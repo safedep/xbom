@@ -35,6 +35,13 @@ signatures:
         conditions:
           - type: call
             value: "openai.OpenAI"
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.openai.client.okhttp.OpenAIOkHttpClient.builder"
+          - type: call
+            value: "com.openai.client.okhttp.OpenAIOkHttpClient.fromEnv"
 
   - id: openai.async
     description: "OpenAI AI Async Responses"
@@ -48,6 +55,13 @@ signatures:
         conditions:
           - type: call
             value: "openai.AsyncOpenAI"
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.openai.client.okhttp.OpenAIOkHttpClientAsync.builder"
+          - type: call
+            value: "com.openai.client.okhttp.OpenAIOkHttpClientAsync.fromEnv"
 
   - id: openai.azure
     description: "Azure OpenAI AI Responses"
@@ -70,3 +84,31 @@ signatures:
             value: "com.azure.ai.openai.OpenAIAsyncClient"
           - type: call
             value: "com.azure.ai.openai.OpenAIClient"
+
+  - id: openai.embeddings
+    description: "OpenAI Embedding models and vectorization"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Embedding model and vectorization"
+    tags: [ai, embeddings, text, vectorization, vectors]
+    languages:
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: "com.openai.models.embeddings.*"
+
+  - id: openai.function_calling
+    description: "OpenAI Function Calling capabilities"
+    vendor: "OpenAI"
+    product: "OpenAI API"
+    service: "Function calling capabilities"
+    tags: [ai, function, calling, functions]
+    languages:
+      java:
+        match: any
+        conditions:
+          - type: call
+            value: com.openai.models.FunctionDefinition.*
+          - type: call
+            value: com.openai.models.FunctionParameters.*
