@@ -109,6 +109,6 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: com.openai.models.FunctionDefinition.*
+            value: "com.openai.models.FunctionDefinition.*"
           - type: call
-            value: com.openai.models.FunctionParameters.*
+            value: "com.openai.models.FunctionParameters.*"

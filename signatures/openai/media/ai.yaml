@@ -15,9 +15,9 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: com.openai.models.images.ImageGenerateParams.*
+            value: "com.openai.models.images.ImageGenerateParams.*"
           - type: call
-            value: com.openai.models.images.ImageModel.*
+            value: "com.openai.models.images.ImageModel.*"
 
   - id: openai.audio
     description: "OpenAI Audio Transcription service"
