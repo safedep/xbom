@@ -4,10 +4,8 @@
 4d63.com/gochecknoglobals v0.2.2/go.mod h1:lLxwTQjL5eIesRbvnzIP3jZtG140FnTdz+AlMa+ogt0=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250425153114-8976f5be98c1.1 h1:YhMSc48s25kr7kv31Z8vf7sPUIq5YJva9z1mn/hAt0M=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250425153114-8976f5be98c1.1/go.mod h1:avRlCjnFzl98VPaeCtJ24RrV/wwHFzB8sWXhj26+n/U=
-buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250606064815-fafeb46ec6a1.1 h1:EFJP5ojYGAfqsMXgf1PcAqzUjLHdLqbsMDiTmUAMqn4=
-buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250606064815-fafeb46ec6a1.1/go.mod h1:uR95GqsnNCRn6cTyRBte6uMJMm0rEBRxTGpakKCNL9I=
-buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250609130256-97e0a6d68a26.1 h1:DIGJ12FZcBZS96JIiwhLAFLa2BaCZpX+Oynm5CayfVo=
-buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250609130256-97e0a6d68a26.1/go.mod h1:uR95GqsnNCRn6cTyRBte6uMJMm0rEBRxTGpakKCNL9I=
+buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250610075857-7cfdb61a0bfa.1 h1:wOZtKj81Wq5fvHf4STR0vxEl8/peoEJkRzuQI+zwE2I=
+buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250610075857-7cfdb61a0bfa.1/go.mod h1:uR95GqsnNCRn6cTyRBte6uMJMm0rEBRxTGpakKCNL9I=
 buf.build/go/protovalidate v0.12.0 h1:4GKJotbspQjRCcqZMGVSuC8SjwZ/FmgtSuKDpKUTZew=
 buf.build/go/protovalidate v0.12.0/go.mod h1:q3PFfbzI05LeqxSwq+begW2syjy2Z6hLxZSkP1OH/D0=
 cel.dev/expr v0.24.0 h1:56OvJKSH3hDGL0ml5uSxZmz3/3Pq4tJ+fb1unVLAFcY=
@@ -362,8 +360,8 @@ github.com/ryancurrah/gomodguard v1.3.5 h1:cShyguSwUEeC0jS7ylOiG/idnd1TpJ1LfHGpV
 github.com/ryancurrah/gomodguard v1.3.5/go.mod h1:MXlEPQRxgfPQa62O8wzK3Ozbkv9Rkqr+wKjSxTdsNJE=
 github.com/ryanrolds/sqlclosecheck v0.5.1 h1:dibWW826u0P8jNLsLN+En7+RqWWTYrjCB9fJfSfdyCU=
 github.com/ryanrolds/sqlclosecheck v0.5.1/go.mod h1:2g3dUjoS6AL4huFdv6wn55WpLIDjY7ZgUR4J8HOO/XQ=
-github.com/safedep/code v0.0.0-20250607125516-0961a0fa85bd h1:QOEVAPFakgjdOTgKXa8ae1u9rImxEQm8lvFJXWkaTNg=
-github.com/safedep/code v0.0.0-20250607125516-0961a0fa85bd/go.mod h1:FultRk28rsC/hfgSIeEGaNPk6dMKdwvpva7A0bIFDTA=
+github.com/safedep/code v0.0.0-20250610122234-1c9ee24b7317 h1:7+g5Yx5qUm/AC8MFS9JZq220KPkxwFKTllQ4smVDMsg=
+github.com/safedep/code v0.0.0-20250610122234-1c9ee24b7317/go.mod h1:dwBhRQG722MBp9fGvqdYESnOZpl5dzTKVImRKcwQMNw=
 github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429 h1:jSeNB9oO0tSPUHIc1dZtmdAl3Hy6z8QIaxA2x9ep5T8=
 github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429/go.mod h1:nU5w9Xb5Ja2wq5PU/K8r8r1Dc25ApJXKKqvwju99G2w=
 github.com/sanposhiho/wastedassign/v2 v2.1.0 h1:crurBF7fJKIORrV85u9UUpePDYGWnwvv3+A96WvwXT0=
