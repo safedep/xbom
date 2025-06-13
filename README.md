@@ -1,27 +1,37 @@
-# xbom
-Generate BOMs enriched with AI, SaaS and more using Static Code Analysis
+<div align="center">
+  <h1>xBom</h1>
+  
+  <p><strong>Generate BOMs enriched with AI, SaaS and more using Static Code Analysis</strong></p>
+</div>
 
-## 📑 Table of Contents
-- [Usage](#usage)
-- [Supported Ecosystems](#supported-ecosystems)
-- [Limitations](#limitations)
-- [Contributing](#contributing)
+<div align="center">
 
-## Usage
+[![Go Report Card](https://goreportcard.com/badge/github.com/safedep/xbom)](https://goreportcard.com/report/github.com/safedep/xbom)
+[![License](https://img.shields.io/github/license/safedep/xbom)](https://github.com/safedep/xbom/blob/main/LICENSE)
+[![Release](https://img.shields.io/github/v/release/safedep/xbom)](https://github.com/safedep/xbom/releases)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/safedep/xbom/badge)](https://api.securityscorecards.dev/projects/github.com/safedep/xbom)
+[![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
+[![CodeQL](https://github.com/safedep/xbom/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/safedep/xbom/actions/workflows/codeql.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/safedep/xbom.svg)](https://pkg.go.dev/github.com/safedep/xbom)
 
-Generate an AI BOM from source code:
+</div>
+
+## ⚡ Quick Start
 
 ```bash
-xbom generate --dir /path/to/code
+# Installation on macOS & Linux
+brew install safedep/tap/xbom
 ```
 
-This will by default generate a console statistics of different AI products used in the code base.
+or download a **[pre-built binary](https://github.com/safedep/xbom/releases)**
+
 
 ```bash
-xbom generate --dir /path/to/code --cdx /path/to/sbom.cdx.json
+# Generate BOM for your source code
+xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
 ```
 
-This will generate a CycloneDX SBOM with AI components detected in the code base.
+This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base following 
 
 ## Supported Languages
 Currently, xBom supports the following programming languages:
@@ -29,14 +39,14 @@ Currently, xBom supports the following programming languages:
 | Language | Status |
 |-----------|--------|
 | Python      | ✅ Active |
+| Java      | ✅ Active |
+| Javascript      | 🚧 WIP |
 
 ## Limitations
 
-`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a SBOM for library dependencies, you can use [vet](https://github.com/safedep/vet).
+`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/xbom).
 
 ## Development
-
-
 
 ### Signatures
 

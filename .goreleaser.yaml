@@ -43,7 +43,7 @@ universal_binaries:
   - replace: true
 
 brews:
-  - name: pmg
+  - name: xbom
     homepage: https://github.com/safedep/xbom
     description: "Generate BOMs enriched with AI, SaaS and more using Static Code Analysis"
     license: "Apache-2.0"
