@@ -1,0 +1,46 @@
+name: Release Automation
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+concurrency: ci-release-automation
+
+permissions:
+  contents: read
+
+jobs:
+  goreleaser:
+    timeout-minutes: 60
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+    permissions:
+      contents: write  # for goreleaser/goreleaser-action to create a GitHub release
+      packages: write # for goreleaser/goreleaser-action to publish docker images
+    runs-on: ubuntu-latest
+    env:
+      # Required for buildx on docker 19.x
+      DOCKER_CLI_EXPERIMENTAL: "enabled"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5
+        with:
+          go-version: 1.24
+          check-latest: true
+
+      - name: Run GoReleaser
+        id: run-goreleaser
+        uses: goreleaser/goreleaser-action@286f3b13b1b49da4ac219696163fb8c1c93e1200 # v6
+        with:
+          distribution: goreleaser
+          version: '~> v2'
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
+
