@@ -1,0 +1,75 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+env:
+  - CGO_ENABLED=1
+
+builds:
+  - id: linux
+    goos: [linux]
+    goarch: [amd64]
+    env:
+      - CC=x86_64-linux-gnu-gcc
+      - CXX=x86_64-linux-gnu-g++
+
+  - id: darwin
+    goos: [darwin]
+    goarch: [amd64, arm64]
+    env:
+      - CC=o64-clang
+      - CXX=o64-clang++
+
+  - id: windows
+    goos: [windows]
+    goarch: [amd64]
+    env:
+      - CC=x86_64-w64-mingw32-gcc
+      - CXX=x86_64-w64-mingw32-g++
+
+release:
+  # for prerelease it doesn't build and distribute
+  prerelease: auto
+
+universal_binaries:
+  - replace: true
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+    - goos: windows
+      format: zip
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+brews:
+  - name: xbom
+    homepage: https://github.com/safedep/xbom
+    description: "Generate BOMs enriched with AI, SaaS and more using Static Code Analysis"
+    license: "Apache-2.0"
+    repository:
+      owner: safedep
+      name: homebrew-tap
+      branch: main
+
