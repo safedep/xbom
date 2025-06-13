@@ -29,6 +29,10 @@ builds:
       - CC=x86_64-w64-mingw32-gcc
       - CXX=x86_64-w64-mingw32-g++
 
+release:
+  # for prerelease it doesn't build and distribute
+  prerelease: auto
+
 universal_binaries:
   - replace: true
 
