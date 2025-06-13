@@ -44,7 +44,7 @@ Currently, xBom supports the following programming languages:
 
 ## Limitations
 
-`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/xbom).
+`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
 
 ## Development
 
