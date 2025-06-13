@@ -8,18 +8,32 @@ env:
   - CGO_ENABLED=1
 
 builds:
-  - env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-      - darwin
-      - windows
-    goarch:
-      - amd64
-      - arm64
+  - id: linux
+    goos: [linux]
+    goarch: [amd64]
+    env:
+      - CC=x86_64-linux-gnu-gcc
+      - CXX=x86_64-linux-gnu-g++
+
+  - id: darwin
+    goos: [darwin]
+    goarch: [amd64, arm64]
+    env:
+      - CC=o64-clang
+      - CXX=o64-clang++
+
+  - id: windows
+    goos: [windows]
+    goarch: [amd64]
+    env:
+      - CC=x86_64-w64-mingw32-gcc
+      - CXX=x86_64-w64-mingw32-g++
+
+universal_binaries:
+  - replace: true
 
 archives:
-  - formats: [tar.gz]
+  - format: tar.gz
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -28,8 +42,11 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
     format_overrides:
-      - goos: windows
-        formats: [zip]
+    - goos: windows
+      format: zip
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
 
 changelog:
   sort: asc
@@ -41,9 +58,6 @@ changelog:
 checksum:
   name_template: 'checksums.txt'
   algorithm: sha256
-
-universal_binaries:
-  - replace: true
 
 brews:
   - name: xbom
