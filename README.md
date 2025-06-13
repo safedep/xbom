@@ -40,7 +40,7 @@ Currently, xBom supports the following programming languages:
 |-----------|--------|
 | Python      | ✅ Active |
 | Java      | ✅ Active |
-| Javascript      | 🚧 WIP |
+| JavaScript      | 🚧 WIP |
 
 ## Limitations
 
