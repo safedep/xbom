@@ -31,7 +31,7 @@ or download a **[pre-built binary](https://github.com/safedep/xbom/releases)**
 xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
 ```
 
-This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base following 
+This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base.
 
 ## Supported Languages
 Currently, xBom supports the following programming languages:
