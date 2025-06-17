@@ -44,24 +44,23 @@ Currently, xBom supports the following programming languages:
 
 ## Supported BOMs
 
-### AI
-
 <div align="center">
+  <p align="center" style="font-size:2em;"><strong>AI</strong></p>
 <p>
-  <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="OpenAI" />
-  <img src="https://images.seeklogo.com/logo-png/61/1/langchain-icon-logo-png_seeklogo-611655.png" alt="" />
-  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+  <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="OpenAI" width="100"/>
+  <img src="https://images.seeklogo.com/logo-png/61/1/langchain-icon-logo-png_seeklogo-611655.png" alt="LangChain" width="100"/>
+  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express" width="100"/>
 </p>
 </div>
 
-### Cloud
-
 <div align="center">
+  <p align="center" style="font-size:2em;"><strong>Cloud</strong></p>
 <p>
-  <img src="https://pendulum-it.com/wp-content/uploads/2020/05/Google-Cloud-Platform-GCP-logo.png" alt="GCP" />
-  <img src="https://swimburger.net/media/fbqnp2ie/azure.svg" alt="Azure" />
+  <img src="https://pendulum-it.com/wp-content/uploads/2020/05/Google-Cloud-Platform-GCP-logo.png" alt="GCP" width="100"/>
+  <img src="https://swimburger.net/media/fbqnp2ie/azure.svg" alt="Azure" width="100"/>
 </p>
 </div>
+
 
 ## Limitations
 
