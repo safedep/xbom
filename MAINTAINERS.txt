@@ -1,4 +1,4 @@
-vet is built and maintained by SafeDep with the help of the community.
+xbom is built and maintained by SafeDep with the help of the community.
 https://safedep.io
 
 Abhisek Datta
@@ -12,6 +12,6 @@ Omkar Phansopkar
 	Affiliation: SafeDep
 
 Kunal Singh
-  Email: kunal.singh@safedep.io
-  GitHub username: KunalSin9h
-  Affiliation: SafeDep
+	Email: kunal.singh@safedep.io
+	GitHub username: @KunalSin9h
+	Affiliation: SafeDep
