@@ -12,15 +12,15 @@ builds:
     goos: [linux]
     goarch: [amd64]
     env:
-      - CC=x86_64-linux-gnu-gcc
-      - CXX=x86_64-linux-gnu-g++
+      - CC=gcc 
+      - CXX=g++ 
 
   - id: darwin
     goos: [darwin]
     goarch: [amd64, arm64]
     env:
-      - CC=o64-clang
-      - CXX=o64-clang++
+      - CC=aarch64-linux-gnu-gcc
+      - CXX=aarch64-linux-gnu-g++
 
   - id: windows
     goos: [windows]
