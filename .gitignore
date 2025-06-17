@@ -24,11 +24,13 @@ go.work.sum
 # env file
 .env
 
-bin/
-.vscode/
-
-# xBom Binary
+# Binaries
 xbom
+bin/
+dist/
+
+# IDEs and editors
+.vscode/
 
 # MacOS specific files
 **/.DS_Store
