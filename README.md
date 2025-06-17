@@ -44,19 +44,26 @@ Currently, xBom supports the following programming languages:
 
 ## Supported BOMs
 
+![image]()
+
+
 <div align="center">
   <p align="center" style="font-size:2em;"><strong>AI</strong></p>
 <p>
-  <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="OpenAI" width="120"/>
-  <img src="https://github.com/user-attachments/assets/832ae2cf-a807-42b9-8ae7-6366f43f9d05" alt="LangChain" width="120"/>
+  <img src="https://github.com/user-attachments/assets/832ae2cf-a807-42b9-8ae7-6366f43f9d05" alt="LangChain" width="200"/>
+  
+  <img src="https://github.com/user-attachments/assets/f69820cf-c76b-44b0-850c-9cc1df4830a9" alt="Antropic" width="200"/>
+  <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="CrewAI" width="200"/>
+  
+  <img src="https://github.com/user-attachments/assets/789f75fb-a465-4b05-b3c4-2ccee204b1df" alt="OpenaI" width="200"/>
 </p>
 </div>
 
 <div align="center">
   <p align="center" style="font-size:2em;"><strong>Cloud</strong></p>
 <p>
-  <img src="https://pendulum-it.com/wp-content/uploads/2020/05/Google-Cloud-Platform-GCP-logo.png" alt="GCP" width="80"/>
-  <img src="https://swimburger.net/media/fbqnp2ie/azure.svg" alt="Azure" width="80"/>
+  <img src="https://pendulum-it.com/wp-content/uploads/2020/05/Google-Cloud-Platform-GCP-logo.png" alt="GCP" width="100"/>
+  <img src="https://swimburger.net/media/fbqnp2ie/azure.svg" alt="Azure" width="100"/>
 </p>
 </div>
 
