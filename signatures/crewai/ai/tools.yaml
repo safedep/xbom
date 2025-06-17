@@ -15,7 +15,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.ApifyActorsTool.*"
+            value: "crewai_tools.ApifyActorsTool"
 
   - id: crewai_tools.BrowserbaseLoadTool
     description: "Interacts with and extracts data from web browsers."
@@ -28,7 +28,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.BrowserbaseLoadTool.*"
+            value: "crewai_tools.BrowserbaseLoadTool"
 
   - id: crewai_tools.CodeDocsSearchTool
     description: "RAG tool optimized for searching through code documentation and technical documents."
@@ -41,7 +41,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.CodeDocsSearchTool.*"
+            value: "crewai_tools.CodeDocsSearchTool"
 
   - id: crewai_tools.CodeInterpreterTool
     description: "Interprets Python code."
@@ -54,7 +54,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.CodeInterpreterTool.*"
+            value: "crewai_tools.CodeInterpreterTool"
 
   - id: crewai_tools.ComposioTool
     description: "Enables use of Composio tools."
@@ -67,7 +67,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.ComposioTool.*"
+            value: "crewai_tools.ComposioTool"
 
   - id: crewai_tools.CSVSearchTool
     description: "RAG tool for searching within CSV files, tailored for structured data."
@@ -80,7 +80,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.CSVSearchTool.*"
+            value: "crewai_tools.CSVSearchTool"
 
   - id: crewai_tools.DALLETool
     description: "Generates images using the DALL-E API."
@@ -93,7 +93,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.DALLETool.*"
+            value: "crewai_tools.DALLETool"
 
   - id: crewai_tools.DirectorySearchTool
     description: "RAG tool for searching within directories, useful for navigating file systems."
@@ -106,7 +106,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.DirectorySearchTool.*"
+            value: "crewai_tools.DirectorySearchTool"
 
   - id: crewai_tools.DOCXSearchTool
     description: "RAG tool for searching within DOCX documents, ideal for processing Word files."
@@ -119,7 +119,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.DOCXSearchTool.*"
+            value: "crewai_tools.DOCXSearchTool"
 
   - id: crewai_tools.DirectoryReadTool
     description: "Facilitates reading and processing of directory structures and their contents."
@@ -132,7 +132,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.DirectoryReadTool.*"
+            value: "crewai_tools.DirectoryReadTool"
 
   - id: crewai_tools.EXASearchTool
     description: "Performs exhaustive searches across various data sources."
@@ -145,7 +145,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.EXASearchTool.*"
+            value: "crewai_tools.EXASearchTool"
 
   - id: crewai_tools.FileReadTool
     description: "Enables reading and extracting data from files, supporting various formats."
@@ -158,7 +158,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.FileReadTool.*"
+            value: "crewai_tools.FileReadTool"
 
   - id: crewai_tools.FirecrawlSearchTool
     description: "Searches webpages using Firecrawl and returns the results."
@@ -171,7 +171,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.FirecrawlSearchTool.*"
+            value: "crewai_tools.FirecrawlSearchTool"
 
   - id: crewai_tools.FirecrawlCrawlWebsiteTool
     description: "Crawls webpages using Firecrawl."
@@ -184,7 +184,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.FirecrawlCrawlWebsiteTool.*"
+            value: "crewai_tools.FirecrawlCrawlWebsiteTool"
 
   - id: crewai_tools.FirecrawlScrapeWebsiteTool
     description: "Scrapes webpages URL using Firecrawl and returns its contents."
@@ -197,7 +197,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.FirecrawlScrapeWebsiteTool.*"
+            value: "crewai_tools.FirecrawlScrapeWebsiteTool"
 
   - id: crewai_tools.GithubSearchTool
     description: "RAG tool for searching within GitHub repositories, useful for code and documentation search."
@@ -210,7 +210,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.GithubSearchTool.*"
+            value: "crewai_tools.GithubSearchTool"
 
   - id: crewai_tools.SerperDevTool
     description: "Specialized tool for development purposes, with specific functionalities under development."
@@ -223,7 +223,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.SerperDevTool.*"
+            value: "crewai_tools.SerperDevTool"
 
   - id: crewai_tools.TXTSearchTool
     description: "RAG tool focused on searching within text (.txt) files, suitable for unstructured data."
@@ -236,7 +236,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.TXTSearchTool.*"
+            value: "crewai_tools.TXTSearchTool"
 
   - id: crewai_tools.JSONSearchTool
     description: "RAG tool for searching within JSON files, catering to structured data handling."
@@ -249,7 +249,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.JSONSearchTool.*"
+            value: "crewai_tools.JSONSearchTool"
 
   - id: crewai_tools.LlamaIndexTool
     description: "Enables the use of LlamaIndex tools."
@@ -262,7 +262,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.LlamaIndexTool.*"
+            value: "crewai_tools.LlamaIndexTool"
 
   - id: crewai_tools.MDXSearchTool
     description: "RAG tool tailored for searching within Markdown (MDX) files, useful for documentation."
@@ -275,7 +275,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.MDXSearchTool.*"
+            value: "crewai_tools.MDXSearchTool"
 
   - id: crewai_tools.PDFSearchTool
     description: "RAG tool for searching within PDF documents, ideal for processing scanned documents."
@@ -288,7 +288,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.PDFSearchTool.*"
+            value: "crewai_tools.PDFSearchTool"
 
   - id: crewai_tools.PGSearchTool
     description: "RAG tool optimized for searching within PostgreSQL databases, suitable for database queries."
@@ -301,7 +301,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.PGSearchTool.*"
+            value: "crewai_tools.PGSearchTool"
 
   - id: crewai_tools.VisionTool
     description: "Generates images using the DALL-E API."
@@ -314,7 +314,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.VisionTool.*"
+            value: "crewai_tools.VisionTool"
 
   - id: crewai_tools.RagTool
     description: "General-purpose RAG tool capable of handling various data sources and types."
@@ -327,7 +327,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.RagTool.*"
+            value: "crewai_tools.RagTool"
 
   - id: crewai_tools.ScrapeElementFromWebsiteTool
     description: "Enables scraping specific elements from websites, useful for targeted data extraction."
@@ -340,7 +340,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.ScrapeElementFromWebsiteTool.*"
+            value: "crewai_tools.ScrapeElementFromWebsiteTool"
 
   - id: crewai_tools.ScrapeWebsiteTool
     description: "Facilitates scraping entire websites, ideal for comprehensive data collection."
@@ -353,7 +353,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.ScrapeWebsiteTool.*"
+            value: "crewai_tools.ScrapeWebsiteTool"
 
   - id: crewai_tools.WebsiteSearchTool
     description: "RAG tool for searching website content, optimized for web data extraction."
@@ -366,7 +366,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.WebsiteSearchTool.*"
+            value: "crewai_tools.WebsiteSearchTool"
 
   - id: crewai_tools.XMLSearchTool
     description: "RAG tool for searching within XML files, suitable for structured data formats."
@@ -379,7 +379,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.XMLSearchTool.*"
+            value: "crewai_tools.XMLSearchTool"
 
   - id: crewai_tools.YoutubeChannelSearchTool
     description: "RAG tool for searching within YouTube channels, useful for video content analysis."
@@ -392,7 +392,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.YoutubeChannelSearchTool.*"
+            value: "crewai_tools.YoutubeChannelSearchTool"
 
   - id: crewai_tools.YoutubeVideoSearchTool
     description: "RAG tool for searching within YouTube videos, ideal for video data extraction."
@@ -405,4 +405,4 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai_tools.YoutubeVideoSearchTool.*"
+            value: "crewai_tools.YoutubeVideoSearchTool"

@@ -15,7 +15,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.Agent.*"
+            value: "crewai.Agent"
 
   - id: crewai.task
     description: "Task is a specific assignment completed by an Agent. Tasks provide all necessary details for execution, such as a description, the agent responsible, required tools, and more, facilitating a wide range of action complexities."
@@ -28,7 +28,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.Task.*"
+            value: "crewai.Task"
 
   - id: crewai.crew
     description: "A crew in crewAI represents a collaborative group of agents working together to achieve a set of tasks. Each crew defines the strategy for task execution, agent collaboration, and the overall workflow."
@@ -41,7 +41,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.Crew.*"
+            value: "crewai.Crew"
 
   - id: crewai.flow
     description: "CrewAI Flows is a powerful feature designed to streamline the creation and management of AI workflows. Flows allow developers to combine and coordinate coding tasks and Crews efficiently, providing a robust framework for building sophisticated AI automations."
@@ -54,7 +54,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.Flow.*"
+            value: "crewai.Flow"
 
   - id: crewai.knowledge
     description: "Knowledge in CrewAI is a powerful system that allows AI agents to access and utilize external information sources during their tasks. Think of it as giving your agents a reference library they can consult while working."
@@ -67,7 +67,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.Knowledge.*"
+            value: "crewai.Knowledge"
 
   - id: crewai.llms
     description: "CrewAI integrates with multiple LLM providers through LiteLLM, giving you the flexibility to choose the right model for your specific use case. This guide will help you understand how to configure and use different LLM providers in your CrewAI projects."
@@ -80,7 +80,7 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.LLM.*"
+            value: "crewai.LLM"
 
   - id: crewai.processes
     description: "Processes orchestrate the execution of tasks by agents, akin to project management in human teams. These processes ensure tasks are distributed and executed efficiently, in alignment with a predefined strategy."
@@ -93,4 +93,4 @@ signatures:
         match: any
         conditions:
           - type: call
-            value: "crewai.Process.*"
+            value: "crewai.Process"
