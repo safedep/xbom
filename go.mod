@@ -7,8 +7,9 @@ require (
 	github.com/CycloneDX/cyclonedx-go v0.9.2
 	github.com/google/uuid v1.6.0
 	github.com/jedib0t/go-pretty/v6 v6.6.7
+	github.com/posthog/posthog-go v1.5.12
 	github.com/safedep/code v0.0.0-20250610122234-1c9ee24b7317
-	github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429
+	github.com/safedep/dry v0.0.0-20250613153337-39475c3f0d64
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
 	gopkg.in/yaml.v3 v3.0.1

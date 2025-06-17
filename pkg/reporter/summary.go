@@ -20,7 +20,7 @@ func SummariseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 		{
 			Number:    0,
 			AutoMerge: true,
-			WidthMax:  20,
+			WidthMax:  40,
 		},
 		{
 			Number:   1,
@@ -28,11 +28,11 @@ func SummariseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 		},
 		{
 			Number:   3,
-			WidthMax: 25,
+			WidthMax: 30,
 		},
 		{
 			Number:   4,
-			WidthMax: 25,
+			WidthMax: 30,
 		},
 	})
 

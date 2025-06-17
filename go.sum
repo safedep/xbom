@@ -328,6 +328,8 @@ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRI
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/polyfloyd/go-errorlint v1.7.1 h1:RyLVXIbosq1gBdk/pChWA8zWYLsq9UEw7a1L5TVMCnA=
 github.com/polyfloyd/go-errorlint v1.7.1/go.mod h1:aXjNb1x2TNhoLsk26iv1yl7a+zTnXPhwEMtEXukiLR8=
+github.com/posthog/posthog-go v1.5.12 h1:nxK/z5QLCFxwzxV8GNvVd4Y1wJ++zJSWMGEtzU+/HLM=
+github.com/posthog/posthog-go v1.5.12/go.mod h1:ZPCind3bz8xDLK0Zhvpv1fQav6WfRcQDqTMfMXmna98=
 github.com/prashantv/gostub v1.1.0 h1:BTyx3RfQjRHnUWaGF9oQos79AlQ5k8WNktv7VGvVH4g=
 github.com/prashantv/gostub v1.1.0/go.mod h1:A5zLQHz7ieHGG7is6LLXLz7I8+3LZzsrV0P1IAHhP5U=
 github.com/prometheus/client_golang v1.22.0 h1:rb93p9lokFEsctTys46VnV1kLCDpVZ0a/Y92Vm0Zc6Q=
@@ -362,8 +364,8 @@ github.com/ryanrolds/sqlclosecheck v0.5.1 h1:dibWW826u0P8jNLsLN+En7+RqWWTYrjCB9f
 github.com/ryanrolds/sqlclosecheck v0.5.1/go.mod h1:2g3dUjoS6AL4huFdv6wn55WpLIDjY7ZgUR4J8HOO/XQ=
 github.com/safedep/code v0.0.0-20250610122234-1c9ee24b7317 h1:7+g5Yx5qUm/AC8MFS9JZq220KPkxwFKTllQ4smVDMsg=
 github.com/safedep/code v0.0.0-20250610122234-1c9ee24b7317/go.mod h1:dwBhRQG722MBp9fGvqdYESnOZpl5dzTKVImRKcwQMNw=
-github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429 h1:jSeNB9oO0tSPUHIc1dZtmdAl3Hy6z8QIaxA2x9ep5T8=
-github.com/safedep/dry v0.0.0-20250606161159-68fd58ca3429/go.mod h1:nU5w9Xb5Ja2wq5PU/K8r8r1Dc25ApJXKKqvwju99G2w=
+github.com/safedep/dry v0.0.0-20250613153337-39475c3f0d64 h1:bUjtTt0UlCEHqjl3V4dOiA+sj2Lf4B/lvSuIK5DPhSM=
+github.com/safedep/dry v0.0.0-20250613153337-39475c3f0d64/go.mod h1:nU5w9Xb5Ja2wq5PU/K8r8r1Dc25ApJXKKqvwju99G2w=
 github.com/sanposhiho/wastedassign/v2 v2.1.0 h1:crurBF7fJKIORrV85u9UUpePDYGWnwvv3+A96WvwXT0=
 github.com/sanposhiho/wastedassign/v2 v2.1.0/go.mod h1:+oSmSC+9bQ+VUAxA66nBb0Z7N8CK7mscKTDYC6aIek4=
 github.com/santhosh-tekuri/jsonschema/v6 v6.0.1 h1:PKK9DyHxif4LZo+uQSgXNqs0jj5+xZwwfKHgph2lxBw=

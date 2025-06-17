@@ -64,3 +64,13 @@ Examples:
 signatures/microsoft/azure/ai.yml
 signatures/microsoft/office/integrations.yml
 ```
+
+## Telemetry
+
+`xbom` collects anonymous telemetry to help us understand how it is used and
+improve the product. To disable telemetry, set `XBOM_DISABLE_TELEMETRY` environment
+variable to `true`.
+
+```bash
+export XBOM_DISABLE_TELEMETRY=true
+```

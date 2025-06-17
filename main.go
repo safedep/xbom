@@ -7,6 +7,7 @@ import (
 	"github.com/safedep/dry/log"
 	"github.com/safedep/dry/obs"
 	"github.com/safedep/xbom/cmd"
+	"github.com/safedep/xbom/internal/analytics"
 	"github.com/spf13/cobra"
 )
 
@@ -35,6 +36,11 @@ func main() {
 	command.AddCommand(cmd.NewVersionCommand())
 	command.AddCommand(cmd.NewGenerateCommand())
 	command.AddCommand(cmd.NewValidateCommand())
+
+	defer analytics.Close()
+
+	analytics.TrackCommandRun()
+	analytics.TrackCI()
 
 	if err := command.Execute(); err != nil {
 		os.Exit(1)
