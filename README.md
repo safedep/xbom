@@ -16,6 +16,29 @@
 
 </div>
 
+## 🎯 Why xbom?
+
+Modern applications rely on much more than just open-source libraries. They often include:
+- AI SDKs 🧠
+- ML models 🤖
+- 3rd party SaaS APIs ☁️
+- Cryptographic algorithms 🔑
+
+✅ **Beyond Manifests** - xbom builds inventories using actual evidence from your codebase
+
+✅ **Extensible Signatures** - add your own signatures over community maintained repository
+
+✅ **Robust Compliance** - single tool to comply with all your Software compliance requirements
+
+✅ **Multi-ecosystem support** — Java, Python and more coming up !
+
+
+## 👀 xbom in action
+
+<div align="center">
+  <img src="./docs/assets/xbom-cli.png" alt="xbom-cli" width="100%" />
+</div>
+
 ## ⚡ Quick Start
 
 ```bash
@@ -33,6 +56,7 @@ xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
 
 This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base.
 
+
 ## Supported Languages
 Currently, xBom supports the following programming languages:
 
@@ -42,28 +66,70 @@ Currently, xBom supports the following programming languages:
 | Java      | ✅ Active |
 | JavaScript      | 🚧 WIP |
 
-## Limitations
+## Supported BOMs
 
-`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
+<div align="center">
+  <h1><strong>AI</strong></h1>
+  <table>
+    <tr>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/832ae2cf-a807-42b9-8ae7-6366f43f9d05" alt="LangChain" width="220"/>
+      </td>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/f69820cf-c76b-44b0-850c-9cc1df4830a9" alt="Anthropic" width="200"/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="250">
+        <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="CrewAI" width="200"/>
+      </td>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/789f75fb-a465-4b05-b3c4-2ccee204b1df" alt="OpenAI" width="200"/>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="center">
+  <h1><strong>Cloud</strong></h1>
+  <table>
+    <tr>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/5bbc05d5-06c4-43a7-8cd7-43ae55fbf182" alt="GCP" width="220"/>
+      </td>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/722f4edc-1f87-4c74-a7af-d684742fbbe6" alt="Azure" width="220"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
+## 👀 Visual convenience
+
+We generate BOMs as JSON files following [CycloneDX SPEC](https://cyclonedx.org/docs/1.6/json/). For a quick overview, you can view the BOM in an interactive HTML output linked in console output.
+
+<div align="center">
+  <img src="./docs/assets/xbom-demo.gif" alt="xbom-demo" width="100%" />
+</div>
 
 ## Development
 
 ### Signatures
 
-xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml` You can generate a new signature file using command -
+xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml`
+For contributing new signatures to the community, refer [this](CONTRIBUTING.md#contributing-signatures)
 
-```bash
-xbom signature new --vendor <vendor> --product <product> --service <name>
-```
+You can also use xbom with your own extended signature list (possibly proprietary) to enrich your BOMs with variety of dependencies.
 
-This will generate a new YAML (if it doesn't exist) file in `signatures/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
 
-Examples:
+## 🤝 Contributing
 
-```
-signatures/microsoft/azure/ai.yml
-signatures/microsoft/office/integrations.yml
-```
+Refer to [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
+## Limitations
+
+`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
+
 
 ## Telemetry
 

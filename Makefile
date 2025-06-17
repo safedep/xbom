@@ -5,7 +5,7 @@ VERSION := "$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --shor
 BIN_DIR := bin
 BIN := $(BIN_DIR)/xbom
 
-GO_CFLAGS=-X main.commit=$(GITCOMMIT) -X main.version=$(VERSION)
+GO_CFLAGS=-X 'github.com/safedep/xbom/cmd.commit=$(GITCOMMIT)' -X 'github.com/safedep/xbom/cmd.version=$(VERSION)'
 GO_LDFLAGS=-ldflags "-w $(GO_CFLAGS)"
 
 all: create_bin xbom
