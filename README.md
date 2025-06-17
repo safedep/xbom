@@ -33,6 +33,11 @@ xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
 
 This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base.
 
+<div align="center">
+  <img src="./docs/assets/xbom-cli.png" alt="xbom-cli" width="100%" />
+</div>
+
+
 ## Supported Languages
 Currently, xBom supports the following programming languages:
 
@@ -50,20 +55,15 @@ Currently, xBom supports the following programming languages:
 
 ### Signatures
 
-xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml` You can generate a new signature file using command -
+xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml`
 
-```bash
-xbom signature new --vendor <vendor> --product <product> --service <name>
-```
 
-This will generate a new YAML (if it doesn't exist) file in `signatures/$vendor/$product/$service.yml`. Edit the file to add the necessary patterns to detect the component.
+## 🤝 Contributing
 
-Examples:
+Refer to [CONTRIBUTING.md](CONTRIBUTING.md)
 
-```
-signatures/microsoft/azure/ai.yml
-signatures/microsoft/office/integrations.yml
-```
+For contributing new signatures, refer [this](CONTRIBUTING.md#contributing-signatures)
+
 
 ## Telemetry
 
@@ -74,3 +74,11 @@ variable to `true`.
 ```bash
 export XBOM_DISABLE_TELEMETRY=true
 ```
+
+## 👀 Visual overview
+
+We generate BOMs as JSON files following [CycloneDX SPIEC](https://cyclonedx.org/docs/1.6/json/). For a quick overview, you can view the BOM in an interactive HTML output linked in console output.
+
+<div align="center">
+  <img src="./docs/assets/xbom-demo.gif" alt="xbom-demo" width="100%" />
+</div>
