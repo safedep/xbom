@@ -49,7 +49,7 @@ Currently, xBom supports the following programming languages:
   <table>
     <tr>
       <td align="center" width="250">
-        <img src="https://github.com/user-attachments/assets/832ae2cf-a807-42b9-8ae7-6366f43f9d05" alt="LangChain" width="202"/>
+        <img src="https://github.com/user-attachments/assets/832ae2cf-a807-42b9-8ae7-6366f43f9d05" alt="LangChain" width="220"/>
       </td>
       <td align="center" width="250">
         <img src="https://github.com/user-attachments/assets/f69820cf-c76b-44b0-850c-9cc1df4830a9" alt="Anthropic" width="200"/>
@@ -69,15 +69,16 @@ Currently, xBom supports the following programming languages:
   <h1><strong>Cloud</strong></h1>
   <table>
     <tr>
-      <td align="center" width="150">
-        <img src="https://pendulum-it.com/wp-content/uploads/2020/05/Google-Cloud-Platform-GCP-logo.png" alt="GCP" width="100"/>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/5bbc05d5-06c4-43a7-8cd7-43ae55fbf182" alt="GCP" width="220"/>
       </td>
-      <td align="center" width="150">
-        <img src="https://swimburger.net/media/fbqnp2ie/azure.svg" alt="Azure" width="100"/>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/722f4edc-1f87-4c74-a7af-d684742fbbe6" alt="Azure" width="220"/>
       </td>
     </tr>
   </table>
 </div>
+
 
 ## Limitations
 
