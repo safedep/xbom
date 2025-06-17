@@ -47,6 +47,44 @@ Currently, xBom supports the following programming languages:
 | Java      | ✅ Active |
 | JavaScript      | 🚧 WIP |
 
+## Supported BOMs
+
+<div align="center">
+  <h1><strong>AI</strong></h1>
+  <table>
+    <tr>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/832ae2cf-a807-42b9-8ae7-6366f43f9d05" alt="LangChain" width="220"/>
+      </td>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/f69820cf-c76b-44b0-850c-9cc1df4830a9" alt="Anthropic" width="200"/>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" width="250">
+        <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="CrewAI" width="200"/>
+      </td>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/789f75fb-a465-4b05-b3c4-2ccee204b1df" alt="OpenAI" width="200"/>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="center">
+  <h1><strong>Cloud</strong></h1>
+  <table>
+    <tr>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/5bbc05d5-06c4-43a7-8cd7-43ae55fbf182" alt="GCP" width="220"/>
+      </td>
+      <td align="center" width="250">
+        <img src="https://github.com/user-attachments/assets/722f4edc-1f87-4c74-a7af-d684742fbbe6" alt="Azure" width="220"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 ## Limitations
 
 `xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
