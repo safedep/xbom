@@ -42,6 +42,27 @@ Currently, xBom supports the following programming languages:
 | Java      | ✅ Active |
 | JavaScript      | 🚧 WIP |
 
+## Supported Components
+
+### AI
+
+<div align="center">
+<p>
+  <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="OpenAI" />
+  <img src="https://images.seeklogo.com/logo-png/61/1/langchain-icon-logo-png_seeklogo-611655.png" alt="" />
+  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express
+</p>
+</div>
+
+### Cloud
+
+<div align="center">
+<p>
+  <img src="https://pendulum-it.com/wp-content/uploads/2020/05/Google-Cloud-Platform-GCP-logo.png" alt="GCP" />
+  <img src="https://swimburger.net/media/fbqnp2ie/azure.svg" alt="Azure" />
+</p>
+</div>
+
 ## Limitations
 
 `xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
