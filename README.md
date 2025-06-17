@@ -42,7 +42,7 @@ Currently, xBom supports the following programming languages:
 | Java      | ✅ Active |
 | JavaScript      | 🚧 WIP |
 
-## Supported Components
+## Supported BOMs
 
 ### AI
 
@@ -50,7 +50,7 @@ Currently, xBom supports the following programming languages:
 <p>
   <img src="https://cdn.prod.website-files.com/66cf2bfc3ed15b02da0ca770/66d07240057721394308addd_Logo%20(1).svg" alt="OpenAI" />
   <img src="https://images.seeklogo.com/logo-png/61/1/langchain-icon-logo-png_seeklogo-611655.png" alt="" />
-  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express
+  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
 </p>
 </div>
 
