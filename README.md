@@ -118,7 +118,7 @@ We generate BOMs as JSON files following [CycloneDX SPEC](https://cyclonedx.org/
 xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml`
 For contributing new signatures to the community, refer [this](CONTRIBUTING.md#contributing-signatures)
 
-You can also use xbom with your own extended signature list (possibly proprietery) to enrich your BOMs with variety of dependencies.
+You can also use xbom with your own extended signature list (possibly proprietary) to enrich your BOMs with variety of dependencies.
 
 
 ## 🤝 Contributing
