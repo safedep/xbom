@@ -24,11 +24,11 @@ Modern applications rely on much more than just open-source libraries. They ofte
 - 3rd party SaaS APIs ☁️
 - Cryptographic algorithms 🔑
 
-✅ **Beyond Manifests** - xbom builds inventories using actual evidence from your codebase
+✅ **Beyond Manifests** - `xbom` builds inventory using actual evidence from your codebase
 
 ✅ **Extensible Signatures** - add your own signatures over community maintained repository
 
-✅ **Robust Compliance** - single tool to comply with all your Software compliance requirements
+✅ **Robust Compliance** - single tool to comply with all your software supply chain compliances
 
 ✅ **Multi-ecosystem support** — Java, Python and more coming up !
 
@@ -56,15 +56,14 @@ xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
 
 This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base.
 
-
 ## Supported Languages
-Currently, xBom supports the following programming languages:
+Currently, `xbom` supports the following programming languages:
 
-| Language | Status |
-|-----------|--------|
-| Python      | ✅ Active |
-| Java      | ✅ Active |
-| JavaScript      | 🚧 WIP |
+| Language   | Status   |
+| ---------- | -------- |
+| Python     | ✅ Active |
+| Java       | ✅ Active |
+| JavaScript | 🚧 WIP    |
 
 ## Supported BOMs
 
@@ -102,6 +101,11 @@ Currently, xBom supports the following programming languages:
     </tr>
   </table>
 </div>
+<div align="center">
+
+<center>
+  <strong>ℹ️ To request support for a new framework, please <a href="https://github.com/safedep/xbom/issues/new">create an issue</a>.</strong>
+</center>
 
 ## 👀 Visual convenience
 
@@ -115,20 +119,15 @@ We generate BOMs as JSON files following [CycloneDX SPEC](https://cyclonedx.org/
 
 ### Signatures
 
-xBom maintains community-driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml`
-For contributing new signatures to the community, refer [this](CONTRIBUTING.md#contributing-signatures)
+`xbom` maintains community driven signatures for popular SDKs, APIs and libraries in `signatures/` following file naming convention - `signatures/$vendor/$product/$service.yml`. To add new signatures, refer [contributing signatures guide](CONTRIBUTING.md#contributing-signatures).
 
-You can also use xbom with your own extended signature list (possibly proprietary) to enrich your BOMs with variety of dependencies.
-
-
-## 🤝 Contributing
+## Contributing
 
 Refer to [CONTRIBUTING.md](CONTRIBUTING.md)
 
-
 ## Limitations
 
-`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a full-fledged SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
+`xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a more comprehensive SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
 
 
 ## Telemetry
