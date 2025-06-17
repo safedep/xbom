@@ -115,7 +115,7 @@ export XBOM_DISABLE_TELEMETRY=true
 
 ## 👀 Visual overview
 
-We generate BOMs as JSON files following [CycloneDX SPIEC](https://cyclonedx.org/docs/1.6/json/). For a quick overview, you can view the BOM in an interactive HTML output linked in console output.
+We generate BOMs as JSON files following [CycloneDX SPEC](https://cyclonedx.org/docs/1.6/json/). For a quick overview, you can view the BOM in an interactive HTML output linked in console output.
 
 <div align="center">
   <img src="./docs/assets/xbom-demo.gif" alt="xbom-demo" width="100%" />
