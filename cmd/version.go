@@ -15,14 +15,7 @@ var (
 	commit  string
 )
 
-var xbomTool = common.ToolMetadata{
-	Name:                 "xbom",
-	Version:              version,
-	Purl:                 "pkg:golang/safedep/xbom@" + version,
-	InformationURI:       "https://github.com/safedep/xbom",
-	VendorName:           "SafeDep",
-	VendorInformationURI: "https://safedep.io",
-}
+var xbomTool common.ToolMetadata
 
 func init() {
 	// Only use buildInfo if version wasn't set by ldflags, that is its being build by `go install`
@@ -32,6 +25,15 @@ func init() {
 		// See: https://antonz.org/go-1-24/#main-modules-version
 		buildInfo, _ := runtimeDebug.ReadBuildInfo()
 		version = buildInfo.Main.Version
+	}
+
+	xbomTool = common.ToolMetadata{
+		Name:                 "xbom",
+		Version:              version,
+		Purl:                 "pkg:golang/safedep/xbom@" + version,
+		InformationURI:       "https://github.com/safedep/xbom",
+		VendorName:           "SafeDep",
+		VendorInformationURI: "https://safedep.io",
 	}
 }
 
