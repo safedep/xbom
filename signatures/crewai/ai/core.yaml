@@ -94,3 +94,16 @@ signatures:
         conditions:
           - type: call
             value: "crewai.Process"
+
+  - id: crewai.LiteAgent
+    description: "A lightweight agent that can process messages and use tools."
+    vendor: "CrewAI Inc."
+    product: "CrewAI Python Library"
+    service: "Multi-Agent Orchestration"
+    tags: [light-agent, crewai]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "crewai.LiteAgent"
