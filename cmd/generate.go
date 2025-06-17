@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/safedep/dry/log"
+	"github.com/safedep/xbom/internal/analytics"
 	"github.com/safedep/xbom/internal/command"
 	"github.com/safedep/xbom/internal/ui"
 	"github.com/safedep/xbom/pkg/bom"
@@ -55,6 +57,7 @@ func NewGenerateCommand() *cobra.Command {
 }
 
 func generate() {
+	analytics.TrackCommandGenerate()
 	command.FailOnError("generate", internalGenerate())
 }
 
@@ -112,6 +115,12 @@ func internalGenerate() error {
 		return fmt.Errorf("failed to summarise code analysis findings: %w", err)
 	}
 
+	htmlPath := resolveHtmlPath()
+	err = reporter.VisualiseCodeAnalysisFindings(codeAnalysisFindings, htmlPath)
+	if err != nil {
+		return fmt.Errorf("failed to visualise code analysis findings: %w", err)
+	}
+
 	err = bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
 	if err != nil {
 		return fmt.Errorf("failed to record code analysis findings in BOM: %w", err)
@@ -124,6 +133,19 @@ func internalGenerate() error {
 
 	fmt.Println()
 	fmt.Printf("📄 BOM saved at %s\n", cyclonedxReportPath)
+	fmt.Println("🔗 You can view the HTML report at:", htmlPath)
 
 	return nil
+}
+
+func resolveHtmlPath() string {
+	parts := strings.Split(cyclonedxReportPath, ".")
+
+	if parts[len(parts)-1] == "json" {
+		parts[len(parts)-1] = "html"
+	} else {
+		parts = append(parts, "html")
+	}
+
+	return strings.Join(parts, ".")
 }
