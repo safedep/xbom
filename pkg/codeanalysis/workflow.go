@@ -13,6 +13,11 @@ type CodeAnalysisWorkflowConfig struct {
 	Callbacks         *CodeAnalysisCallbackRegistry
 }
 
+type EnrichedSignatureMatchResult struct {
+	callgraph.SignatureMatchResult
+	TreeData *[]byte
+}
+
 type CodeAnalysisFindings struct {
-	SignatureWiseMatchResults map[string][]callgraph.SignatureMatchResult
+	SignatureWiseMatchResults map[string][]EnrichedSignatureMatchResult
 }

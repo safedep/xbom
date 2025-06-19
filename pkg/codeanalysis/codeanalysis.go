@@ -21,7 +21,7 @@ func NewCodeAnalysisWorkflow(config CodeAnalysisWorkflowConfig) *CodeAnalysisWor
 	return &CodeAnalysisWorkflow{
 		config: config,
 		findings: CodeAnalysisFindings{
-			SignatureWiseMatchResults: make(map[string][]callgraph.SignatureMatchResult),
+			SignatureWiseMatchResults: make(map[string][]EnrichedSignatureMatchResult),
 		},
 	}
 }
@@ -97,13 +97,21 @@ func (w *CodeAnalysisWorkflow) setupCallgraphPlugin() (core.Plugin, error) {
 	}
 
 	var callgraphCallback callgraph.CallgraphCallback = func(_ context.Context, cg *callgraph.CallGraph) error {
+		treeData, err := cg.Tree.Data()
+		if err != nil {
+			return fmt.Errorf("failed to get tree data: %w", err)
+		}
+
 		signatureMatches, err := signatureMatcher.MatchSignatures(cg)
 		if err != nil {
 			return fmt.Errorf("failed to match signatures: %w", err)
 		}
 
 		for _, signatureMatch := range signatureMatches {
-			w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id] = append(w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id], signatureMatch)
+			w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id] = append(w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id], EnrichedSignatureMatchResult{
+				SignatureMatchResult: signatureMatch,
+				TreeData:             treeData,
+			})
 		}
 
 		return nil
