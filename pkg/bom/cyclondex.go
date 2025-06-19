@@ -117,17 +117,17 @@ func (c *CycloneDXGenerator) RecordCodeAnalysisFindings(findings *codeanalysis.C
 			for _, condition := range signatureMatchResult.MatchedConditions {
 				for _, evidence := range condition.Evidences {
 					metadata := evidence.Metadata(signatureMatchResult.TreeData)
-					evidenceOccurence := cdx.EvidenceOccurrence{
+					evidenceOccurrence := cdx.EvidenceOccurrence{
 						Location:          signatureMatchResult.FilePath,
 						AdditionalContext: metadata.CalleeNamespace,
 					}
 
 					if metadata.CallerIdentifierMetadata != nil {
-						evidenceOccurence.Line = utils.PtrTo(int(metadata.CallerIdentifierMetadata.StartLine + 1))
-						evidenceOccurence.Offset = utils.PtrTo(int(metadata.CallerIdentifierMetadata.StartColumn + 1))
+						evidenceOccurrence.Line = utils.PtrTo(int(metadata.CallerIdentifierMetadata.StartLine + 1))
+						evidenceOccurrence.Offset = utils.PtrTo(int(metadata.CallerIdentifierMetadata.StartColumn + 1))
 					}
 
-					*occurrences = append(*occurrences, evidenceOccurence)
+					*occurrences = append(*occurrences, evidenceOccurrence)
 				}
 			}
 		}

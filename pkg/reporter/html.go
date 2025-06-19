@@ -1,6 +1,7 @@
 package reporter
 
 import (
+	"embed"
 	"fmt"
 	"html/template"
 	"os"
@@ -8,6 +9,18 @@ import (
 
 	"github.com/safedep/xbom/pkg/codeanalysis"
 )
+
+//go:embed templates/report.html
+var templateFS embed.FS
+
+// getHTMLTemplate returns the HTML template content from the embedded file
+func getHTMLTemplate() (string, error) {
+	data, err := templateFS.ReadFile("templates/report.html")
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
 
 // HTMLVisualiser builds and writes an interactive HTML report
 type HTMLVisualiser struct {
@@ -38,6 +51,11 @@ func (hv *HTMLVisualiser) Finish(htmlPath string) error {
 		"ruby":       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg",
 	}
 
+	htmlTemplate, err := getHTMLTemplate()
+	if err != nil {
+		return fmt.Errorf("failed to load HTML template: %v", err)
+	}
+
 	t := template.Must(template.New("report").Funcs(template.FuncMap{
 		"lower": strings.ToLower,
 	}).Parse(htmlTemplate))
@@ -57,7 +75,6 @@ func (hv *HTMLVisualiser) Finish(htmlPath string) error {
 			"Description":     row["Description"],
 			"Tags":            row["Tags"],
 			"FileOccurrences": row["FileOccurrences"],
-			"CallerSnippets":  row["CallerSnippets"],
 		})
 
 		tags := strings.Split(row["Tags"].(string), ",")
