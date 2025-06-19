@@ -75,7 +75,6 @@ func (hv *HTMLVisualiser) Finish(htmlPath string) error {
 			"Description":     row["Description"],
 			"Tags":            row["Tags"],
 			"FileOccurrences": row["FileOccurrences"],
-			"CallerSnippets":  row["CallerSnippets"],
 		})
 
 		tags := strings.Split(row["Tags"].(string), ",")
