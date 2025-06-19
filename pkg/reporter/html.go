@@ -127,7 +127,7 @@ func VisualiseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 
 					// Create a match object with occurrence and snippet
 					match := map[string]interface{}{
-						"Occurrence": fmt.Sprintf("%s", conditionValueString),
+						"Occurrence": conditionValueString,
 						"Snippet":    nil,
 					}
 
