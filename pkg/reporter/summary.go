@@ -37,23 +37,27 @@ func SummariseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 	})
 
 	for _, signatureResults := range codeAnalysisFindings.SignatureWiseMatchResults {
-		for _, match := range signatureResults {
-			for _, condition := range match.MatchedConditions {
+		for _, signatureMatchResult := range signatureResults {
+			for _, condition := range signatureMatchResult.MatchedConditions {
 				for _, evidence := range condition.Evidences {
 					evidenceDetailString := "Unknown"
-					evidenceContent, exists := evidence.Metadata()
-					if exists {
-						evidenceDetailString = fmt.Sprintf("L%d:%d to\nL%d:%d",
-							evidenceContent.StartLine, evidenceContent.StartColumn,
-							evidenceContent.EndLine, evidenceContent.EndColumn)
+					evidenceMetadata := evidence.Metadata(signatureMatchResult.TreeData)
+					if evidenceMetadata.CallerIdentifierMetadata != nil {
+						evidenceDetailString = fmt.Sprintf(
+							"L%d:%d to\nL%d:%d",
+							evidenceMetadata.CallerIdentifierMetadata.StartLine+1,
+							evidenceMetadata.CallerIdentifierMetadata.StartColumn+1,
+							evidenceMetadata.CallerIdentifierMetadata.EndLine+1,
+							evidenceMetadata.CallerIdentifierMetadata.EndColumn+1,
+						)
 					}
 
 					conditionLocationString := fmt.Sprintf("%s: \n%s", condition.Condition.Type, condition.Condition.Value)
 					sigTable.AppendRow(table.Row{
-						match.MatchedSignature.Id,
-						match.MatchedLanguageCode,
+						signatureMatchResult.MatchedSignature.Id,
+						signatureMatchResult.MatchedLanguageCode,
 						conditionLocationString,
-						match.FilePath,
+						signatureMatchResult.FilePath,
 						evidenceDetailString,
 					})
 					sigTable.AppendSeparator()
