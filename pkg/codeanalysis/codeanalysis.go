@@ -10,40 +10,58 @@ import (
 	"github.com/safedep/code/parser"
 	"github.com/safedep/code/plugin"
 	"github.com/safedep/code/plugin/callgraph"
+	"github.com/safedep/xbom/pkg/common"
+	"github.com/safedep/xbom/pkg/reporter"
 )
 
 type CodeAnalysisWorkflow struct {
-	config   CodeAnalysisWorkflowConfig
-	findings CodeAnalysisFindings
+	config    CodeAnalysisWorkflowConfig
+	findings  common.CodeAnalysisFindings
+	reporters []reporter.Reporter
 }
 
-func NewCodeAnalysisWorkflow(config CodeAnalysisWorkflowConfig) *CodeAnalysisWorkflow {
+func NewCodeAnalysisWorkflow(config CodeAnalysisWorkflowConfig, reporters []reporter.Reporter) *CodeAnalysisWorkflow {
 	return &CodeAnalysisWorkflow{
 		config: config,
-		findings: CodeAnalysisFindings{
-			SignatureWiseMatchResults: make(map[string][]EnrichedSignatureMatchResult),
+		findings: common.CodeAnalysisFindings{
+			SignatureWiseMatchResults: make(map[string][]common.EnrichedSignatureMatchResult),
 		},
+		reporters: reporters,
 	}
 }
 
-func (w *CodeAnalysisWorkflow) Execute() error {
+func (w *CodeAnalysisWorkflow) Execute() (*common.CodeAnalysisFindings, error) {
 	err := w.config.Callbacks.OnStart()
 	if err != nil {
-		return fmt.Errorf("failed to execute OnStart callback: %w", err)
+		w.config.Callbacks.OnErr("failed to execute OnStart callback", err)
+		return nil, fmt.Errorf("failed to execute OnStart callback: %w", err)
 	}
 
 	err = w.executeInternal()
 	if err != nil {
 		w.config.Callbacks.OnErr("failed to perform codeanalysis", err)
-		return fmt.Errorf("failed to perform codeanalysis: %w", err)
+		return nil, fmt.Errorf("failed to perform codeanalysis: %w", err)
+	}
+
+	err = w.reportCodeAnalysisFindings()
+	if err != nil {
+		w.config.Callbacks.OnErr("failed to report code analysis findings", err)
+		return nil, fmt.Errorf("failed to report code analysis findings: %w", err)
+	}
+
+	err = w.finishReport()
+	if err != nil {
+		w.config.Callbacks.OnErr("failed to finish reporting", err)
+		return nil, fmt.Errorf("failed to finish reporting: %w", err)
 	}
 
 	err = w.config.Callbacks.OnFinish()
 	if err != nil {
-		return fmt.Errorf("failed to execute OnFinish callback: %w", err)
+		w.config.Callbacks.OnErr("failed to execute OnFinish callback", err)
+		return nil, fmt.Errorf("failed to execute OnFinish callback: %w", err)
 	}
 
-	return nil
+	return &w.findings, nil
 }
 
 func (w *CodeAnalysisWorkflow) executeInternal() error {
@@ -108,7 +126,7 @@ func (w *CodeAnalysisWorkflow) setupCallgraphPlugin() (core.Plugin, error) {
 		}
 
 		for _, signatureMatch := range signatureMatches {
-			w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id] = append(w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id], EnrichedSignatureMatchResult{
+			w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id] = append(w.findings.SignatureWiseMatchResults[signatureMatch.MatchedSignature.Id], common.EnrichedSignatureMatchResult{
 				SignatureMatchResult: signatureMatch,
 				TreeData:             treeData,
 			})
@@ -120,6 +138,24 @@ func (w *CodeAnalysisWorkflow) setupCallgraphPlugin() (core.Plugin, error) {
 	return callgraph.NewCallGraphPlugin(callgraphCallback), nil
 }
 
-func (w *CodeAnalysisWorkflow) Finish() (*CodeAnalysisFindings, error) {
-	return &w.findings, nil
+func (w *CodeAnalysisWorkflow) reportCodeAnalysisFindings() error {
+	for _, reporter := range w.reporters {
+		err := reporter.RecordCodeAnalysisFindings(&w.findings)
+		if err != nil {
+			return fmt.Errorf("failed to record code analysis findings in reporter %s: %w", reporter.Name(), err)
+		}
+	}
+
+	return nil
+}
+
+func (w *CodeAnalysisWorkflow) finishReport() error {
+	for _, reporter := range w.reporters {
+		err := reporter.Finish()
+		if err != nil {
+			return fmt.Errorf("failed to finish reporter %s: %w", reporter.Name(), err)
+		}
+	}
+
+	return nil
 }

@@ -5,10 +5,19 @@ import (
 	"os"
 
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/safedep/xbom/pkg/codeanalysis"
+	"github.com/safedep/xbom/pkg/common"
 )
 
-func SummariseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalysisFindings) error {
+type SummaryReporterConfig struct{}
+
+type SummaryReporter struct {
+	config   SummaryReporterConfig
+	sigTable table.Writer
+}
+
+var _ Reporter = (*SummaryReporter)(nil)
+
+func NewSummaryReporter(config SummaryReporterConfig) (*SummaryReporter, error) {
 	sigTable := table.NewWriter()
 	sigTable.SetOutputMirror(os.Stdout)
 	sigTable.SetStyle(table.StyleRounded)
@@ -36,6 +45,17 @@ func SummariseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 		},
 	})
 
+	return &SummaryReporter{
+		config:   config,
+		sigTable: sigTable,
+	}, nil
+}
+
+func (r *SummaryReporter) Name() string {
+	return "summary"
+}
+
+func (r *SummaryReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *common.CodeAnalysisFindings) error {
 	for _, signatureResults := range codeAnalysisFindings.SignatureWiseMatchResults {
 		for _, signatureMatchResult := range signatureResults {
 			for _, condition := range signatureMatchResult.MatchedConditions {
@@ -53,20 +73,24 @@ func SummariseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 					}
 
 					conditionLocationString := fmt.Sprintf("%s: \n%s", condition.Condition.Type, condition.Condition.Value)
-					sigTable.AppendRow(table.Row{
+					r.sigTable.AppendRow(table.Row{
 						signatureMatchResult.MatchedSignature.Id,
 						signatureMatchResult.MatchedLanguageCode,
 						conditionLocationString,
 						signatureMatchResult.FilePath,
 						evidenceDetailString,
 					})
-					sigTable.AppendSeparator()
+					r.sigTable.AppendSeparator()
 				}
 			}
 		}
 	}
 
-	sigTable.Render()
+	return nil
+}
+
+func (r *SummaryReporter) Finish() error {
+	r.sigTable.Render()
 
 	return nil
 }
