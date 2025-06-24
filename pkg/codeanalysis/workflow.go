@@ -3,7 +3,6 @@ package codeanalysis
 import (
 	callgraphv1 "buf.build/gen/go/safedep/api/protocolbuffers/go/safedep/messages/code/callgraph/v1"
 	"github.com/safedep/xbom/pkg/common"
-	"github.com/safedep/xbom/pkg/reporter"
 )
 
 type CodeAnalysisWorkflowConfig struct {
@@ -11,5 +10,4 @@ type CodeAnalysisWorkflowConfig struct {
 	SourcePath        string
 	SignaturesToMatch []*callgraphv1.Signature
 	Callbacks         *CodeAnalysisCallbackRegistry
-	Reporters         []reporter.Reporter
 }
