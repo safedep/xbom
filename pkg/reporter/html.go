@@ -10,29 +10,29 @@ import (
 	"github.com/safedep/xbom/pkg/common"
 )
 
-type HtmlReporterConfig struct {
+type HTMLReporterConfig struct {
 	HtmlReportPath string // Path to save the HTML report
 }
 
-type HtmlReporter struct {
-	config     HtmlReporterConfig
+type HTMLReporter struct {
+	config     HTMLReporterConfig
 	visualiser *HTMLVisualiser
 }
 
-var _ Reporter = (*HtmlReporter)(nil)
+var _ Reporter = (*HTMLReporter)(nil)
 
-func NewHTMLReporter(config HtmlReporterConfig) (*HtmlReporter, error) {
-	return &HtmlReporter{
+func NewHTMLReporter(config HTMLReporterConfig) (*HTMLReporter, error) {
+	return &HTMLReporter{
 		config:     config,
 		visualiser: NewHTMLVisualiser([]string{"Signature ID", "Description", "Tags"}),
 	}, nil
 }
 
-func (r *HtmlReporter) Name() string {
+func (r *HTMLReporter) Name() string {
 	return "html"
 }
 
-func (r *HtmlReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *common.CodeAnalysisFindings) error {
+func (r *HTMLReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *common.CodeAnalysisFindings) error {
 	sigRows := map[string]map[string]interface{}{}
 
 	for _, signatureResults := range codeAnalysisFindings.SignatureWiseMatchResults {
@@ -115,7 +115,7 @@ func (r *HtmlReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *common.C
 	return nil
 }
 
-func (r *HtmlReporter) Finish() error {
+func (r *HTMLReporter) Finish() error {
 	if r.visualiser == nil {
 		return fmt.Errorf("visualiser is not initialized correctly")
 	}

@@ -91,7 +91,7 @@ func internalGenerate() error {
 	}
 
 	if htmlReportPath != "" {
-		htmlReporter, err := reporter.NewHTMLReporter(reporter.HtmlReporterConfig{
+		htmlReporter, err := reporter.NewHTMLReporter(reporter.HTMLReporterConfig{
 			HtmlReportPath: htmlReportPath,
 		})
 		if err != nil {

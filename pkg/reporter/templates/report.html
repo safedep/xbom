@@ -124,7 +124,7 @@
               class="bg-white divide-y divide-gray-200"
             >
               {{ range $index, $row := .Rows }}
-              <tr>
+              <tr class="signature-main-row">
                 <td class="px-4 py-2 text-sm text-gray-900">
                   {{ $row.Signature_ID }}
                 </td>
@@ -257,6 +257,7 @@
 
           for (let i = 0; i < rows.length; i += 2) {
             const row = rows[i];
+            if (!row.classList.contains("signature-main-row")) continue;
             const detailsRow = rows[i + 1];
             const signatureCell = row.querySelector("td:nth-child(1)");
             const tagsCell = row.querySelector("td:nth-child(3)");
