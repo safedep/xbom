@@ -7,98 +7,32 @@ import (
 	"os"
 	"strings"
 
-	"github.com/safedep/xbom/pkg/codeanalysis"
+	"github.com/safedep/xbom/pkg/common"
 )
 
-//go:embed templates/report.html
-var templateFS embed.FS
-
-// getHTMLTemplate returns the HTML template content from the embedded file
-func getHTMLTemplate() (string, error) {
-	data, err := templateFS.ReadFile("templates/report.html")
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
+type HTMLReporterConfig struct {
+	HtmlReportPath string // Path to save the HTML report
 }
 
-// HTMLVisualiser builds and writes an interactive HTML report
-type HTMLVisualiser struct {
-	headers []string
-	rows    []map[string]interface{}
+type HTMLReporter struct {
+	config     HTMLReporterConfig
+	visualiser *HTMLVisualiser
 }
 
-func NewHTMLVisualiser(headers []string) *HTMLVisualiser {
-	return &HTMLVisualiser{
-		headers: headers,
-		rows:    []map[string]interface{}{},
-	}
+var _ Reporter = (*HTMLReporter)(nil)
+
+func NewHTMLReporter(config HTMLReporterConfig) (*HTMLReporter, error) {
+	return &HTMLReporter{
+		config:     config,
+		visualiser: NewHTMLVisualiser([]string{"Signature ID", "Description", "Tags"}),
+	}, nil
 }
 
-func (hv *HTMLVisualiser) AddRow(row map[string]interface{}) {
-	hv.rows = append(hv.rows, row)
+func (r *HTMLReporter) Name() string {
+	return "html"
 }
 
-func (hv *HTMLVisualiser) Finish(htmlPath string) error {
-	// Map of popular languages to their CDN icon links
-	languageIconMap := map[string]string{
-		"python":     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-		"javascript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-		"go":         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
-		"java":       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-		"c":          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
-		"cpp":        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-		"ruby":       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg",
-	}
-
-	htmlTemplate, err := getHTMLTemplate()
-	if err != nil {
-		return fmt.Errorf("failed to load HTML template: %v", err)
-	}
-
-	t := template.Must(template.New("report").Funcs(template.FuncMap{
-		"lower": strings.ToLower,
-	}).Parse(htmlTemplate))
-
-	f, err := os.Create(htmlPath)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	headers := []string{"Signature_ID", "Description", "Tags"}
-	var rows []map[string]interface{}
-	tagSet := make(map[string]struct{})
-	for _, row := range hv.rows {
-		rows = append(rows, map[string]interface{}{
-			"Signature_ID":    row["Signature ID"],
-			"Description":     row["Description"],
-			"Tags":            row["Tags"],
-			"FileOccurrences": row["FileOccurrences"],
-		})
-
-		tags := strings.Split(row["Tags"].(string), ",")
-		for _, tag := range tags {
-			tag = strings.TrimSpace(tag)
-			tagSet[tag] = struct{}{}
-		}
-	}
-
-	var uniqueTags []string
-	for tag := range tagSet {
-		uniqueTags = append(uniqueTags, tag)
-	}
-
-	return t.Execute(f, map[string]interface{}{
-		"Headers":         headers,
-		"Rows":            rows,
-		"LanguageIconMap": languageIconMap,
-	})
-}
-
-func VisualiseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalysisFindings, htmlPath string) error {
-	hv := NewHTMLVisualiser([]string{"Signature ID", "Description", "Tags"})
-
+func (r *HTMLReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *common.CodeAnalysisFindings) error {
 	sigRows := map[string]map[string]interface{}{}
 
 	for _, signatureResults := range codeAnalysisFindings.SignatureWiseMatchResults {
@@ -145,7 +79,8 @@ func VisualiseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 						}
 
 						match["Snippet"] = map[string]interface{}{
-							"Lines": snippetLines,
+							"Lines":      snippetLines,
+							"RawContent": evidenceMetadata.CallerIdentifierContent,
 						}
 					}
 
@@ -174,8 +109,111 @@ func VisualiseCodeAnalysisFindings(codeAnalysisFindings *codeanalysis.CodeAnalys
 	}
 
 	for _, row := range sigRows {
-		hv.AddRow(row)
+		r.visualiser.AddRow(row)
 	}
 
-	return hv.Finish(htmlPath)
+	return nil
+}
+
+func (r *HTMLReporter) Finish() error {
+	if r.visualiser == nil {
+		return fmt.Errorf("visualiser is not initialized correctly")
+	}
+
+	if err := r.visualiser.GenerateHtmlFile(r.config.HtmlReportPath); err != nil {
+		return fmt.Errorf("failed to finish HTML report: %w", err)
+	}
+
+	fmt.Println("🔗 You can view the HTML report at:", r.config.HtmlReportPath)
+
+	return nil
+}
+
+//go:embed templates/report.html
+var templateFS embed.FS
+
+// getHTMLTemplate returns the HTML template content from the embedded file
+func getHTMLTemplate() (string, error) {
+	data, err := templateFS.ReadFile("templates/report.html")
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
+
+// HTMLVisualiser builds and writes an interactive HTML report
+type HTMLVisualiser struct {
+	headers []string
+	rows    []map[string]interface{}
+}
+
+func NewHTMLVisualiser(headers []string) *HTMLVisualiser {
+	return &HTMLVisualiser{
+		headers: headers,
+		rows:    []map[string]interface{}{},
+	}
+}
+
+func (hv *HTMLVisualiser) AddRow(row map[string]interface{}) {
+	hv.rows = append(hv.rows, row)
+}
+
+func (hv *HTMLVisualiser) GenerateHtmlFile(htmlPath string) error {
+	// Map of popular languages to their CDN icon links
+	languageIconMap := map[string]string{
+		"python":     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+		"javascript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+		"go":         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
+		"java":       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+		"c":          "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
+		"cpp":        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+		"ruby":       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg",
+	}
+
+	htmlTemplate, err := getHTMLTemplate()
+	if err != nil {
+		return fmt.Errorf("failed to load HTML template: %v", err)
+	}
+
+	t := template.Must(template.New("report").Funcs(template.FuncMap{
+		"lower": strings.ToLower,
+	}).Parse(htmlTemplate))
+
+	f, err := os.Create(htmlPath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	headers := []string{"Signature_ID", "Description", "Tags"}
+	var rows []map[string]interface{}
+	tagSet := make(map[string]struct{})
+	for _, row := range hv.rows {
+		rows = append(rows, map[string]interface{}{
+			"Signature_ID":    row["Signature ID"],
+			"Description":     row["Description"],
+			"Tags":            row["Tags"],
+			"FileOccurrences": row["FileOccurrences"],
+		})
+
+		tags := strings.Split(row["Tags"].(string), ",")
+		for _, tag := range tags {
+			tag = strings.TrimSpace(tag)
+			tagSet[tag] = struct{}{}
+		}
+	}
+
+	var uniqueTags []string
+	for tag := range tagSet {
+		if tag != "" {
+			uniqueTags = append(uniqueTags, tag)
+		}
+	}
+
+	return t.Execute(f, map[string]interface{}{
+		"Headers":         headers,
+		"Rows":            rows,
+		"UniqueTags":      uniqueTags,
+		"LanguageIconMap": languageIconMap,
+	})
 }

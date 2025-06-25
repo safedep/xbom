@@ -4,13 +4,11 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"strings"
 
 	"github.com/safedep/dry/log"
 	"github.com/safedep/xbom/internal/analytics"
 	"github.com/safedep/xbom/internal/command"
 	"github.com/safedep/xbom/internal/ui"
-	"github.com/safedep/xbom/pkg/bom"
 	"github.com/safedep/xbom/pkg/codeanalysis"
 	"github.com/safedep/xbom/pkg/reporter"
 	"github.com/safedep/xbom/pkg/signatures"
@@ -18,8 +16,9 @@ import (
 )
 
 var (
-	directory           string
+	codeDirectory       string
 	cyclonedxReportPath string
+	htmlReportPath      string
 )
 
 func NewGenerateCommand() *cobra.Command {
@@ -37,12 +36,12 @@ func NewGenerateCommand() *cobra.Command {
 		panic(err)
 	}
 
-	cmd.Flags().StringVarP(&directory, "dir", "D", wd,
+	cmd.Flags().StringVarP(&codeDirectory, "dir", "D", wd,
 		"Directory for analysing and generating BOM")
 	cmd.Flags().StringVarP(&cyclonedxReportPath, "bom", "", "",
 		"Generate CycloneDX BOM to file")
-
-	_ = cmd.MarkFlagRequired("cdx")
+	cmd.Flags().StringVarP(&htmlReportPath, "html", "", "",
+		"Generate HTML report to file")
 
 	// Add validations that should trigger a fail fast condition
 	cmd.PreRun = func(cmd *cobra.Command, args []string) {
@@ -62,7 +61,7 @@ func generate() {
 }
 
 func internalGenerate() error {
-	log.Infof("Generating BOM for source - %s", directory)
+	log.Infof("Generating BOM for source - %s", codeDirectory)
 
 	// provide grouping filters using signatures.LoadSignatures("microsoft", "azure", "servicebus")
 	signaturesToMatch, err := signatures.LoadAllSignatures()
@@ -71,81 +70,70 @@ func internalGenerate() error {
 	}
 	log.Debugf("Loaded %d signatures", len(signaturesToMatch))
 
-	bomGenerator, err := bom.NewCycloneDXBomGenerator(bom.CycloneDXGeneratorConfig{
-		Tool:                     xbomTool,
-		Path:                     cyclonedxReportPath,
-		ApplicationComponentName: path.Base(directory),
-	})
+	reporters := []reporter.Reporter{}
+
+	summaryReporter, err := reporter.NewSummaryReporter(reporter.SummaryReporterConfig{})
 	if err != nil {
-		return fmt.Errorf("failed to create CycloneDX BOM generator: %w", err)
+		return fmt.Errorf("failed to create summary reporter: %w", err)
+	}
+	reporters = append(reporters, summaryReporter)
+
+	if cyclonedxReportPath != "" {
+		cdxReporter, err := reporter.NewCycloneDXBomReporter(reporter.CycloneDXReporterConfig{
+			Tool:                     xbomTool,
+			Path:                     cyclonedxReportPath,
+			ApplicationComponentName: path.Base(codeDirectory),
+		})
+		if err != nil {
+			return fmt.Errorf("failed to create CycloneDX reporter: %w", err)
+		}
+		reporters = append(reporters, cdxReporter)
 	}
 
-	workflow := codeanalysis.NewCodeAnalysisWorkflow(codeanalysis.CodeAnalysisWorkflowConfig{
-		Tool:              xbomTool,
-		SourcePath:        directory,
-		SignaturesToMatch: signaturesToMatch,
-		Callbacks: &codeanalysis.CodeAnalysisCallbackRegistry{
-			OnStart: func() error {
-				ui.StartSpinner("Analysing code")
-				return nil
-			},
-			OnFinish: func() error {
-				ui.StopSpinner("✅ Code analysis completed.")
-				return nil
-			},
-			OnErr: func(message string, err error) {
-				log.Errorf("Error in code analysis workflow: %s: %v", message, err)
-				ui.StopSpinner("❗Code analysis failed")
+	if htmlReportPath != "" {
+		htmlReporter, err := reporter.NewHTMLReporter(reporter.HTMLReporterConfig{
+			HtmlReportPath: htmlReportPath,
+		})
+		if err != nil {
+			return fmt.Errorf("failed to create HTML reporter: %w", err)
+		}
+		reporters = append(reporters, htmlReporter)
+	}
+
+	workflow := codeanalysis.NewCodeAnalysisWorkflow(
+		codeanalysis.CodeAnalysisWorkflowConfig{
+			Tool:              xbomTool,
+			SourcePath:        codeDirectory,
+			SignaturesToMatch: signaturesToMatch,
+			Callbacks: &codeanalysis.CodeAnalysisCallbackRegistry{
+				OnStart: func() error {
+					ui.StartSpinner("Analysing code")
+					return nil
+				},
+				OnFinish: func() error {
+					ui.StopSpinner("✅ Code analysis completed.")
+					return nil
+				},
+				OnErr: func(message string, err error) {
+					log.Errorf("Error in code analysis workflow: %s: %v", message, err)
+					ui.StopSpinner("❗Code analysis failed")
+				},
 			},
 		},
-	})
+		reporters,
+	)
 
-	err = workflow.Execute()
+	// If xbom is used as a library, we may use the finalised findings here
+	_, err = workflow.Execute()
 	if err != nil {
 		return fmt.Errorf("failed to execute code analysis workflow: %w", err)
 	}
 
-	codeAnalysisFindings, err := workflow.Finish()
-	if err != nil {
-		return fmt.Errorf("failed to finish code analysis workflow: %w", err)
+	// Nudge user to visualise the results
+	if htmlReportPath == "" {
+		fmt.Println("\nTip: You can visualise the report as HTML using \"--html\" flag.")
+		fmt.Println("Example: xbom generate --html /tmp/report.html")
 	}
-
-	err = reporter.SummariseCodeAnalysisFindings(codeAnalysisFindings)
-	if err != nil {
-		return fmt.Errorf("failed to summarise code analysis findings: %w", err)
-	}
-
-	htmlPath := resolveHtmlPath()
-	err = reporter.VisualiseCodeAnalysisFindings(codeAnalysisFindings, htmlPath)
-	if err != nil {
-		return fmt.Errorf("failed to visualise code analysis findings: %w", err)
-	}
-
-	err = bomGenerator.RecordCodeAnalysisFindings(codeAnalysisFindings)
-	if err != nil {
-		return fmt.Errorf("failed to record code analysis findings in BOM: %w", err)
-	}
-
-	err = bomGenerator.Finish()
-	if err != nil {
-		return fmt.Errorf("failed to finish BOM generation: %w", err)
-	}
-
-	fmt.Println()
-	fmt.Printf("📄 BOM saved at %s\n", cyclonedxReportPath)
-	fmt.Println("🔗 You can view the HTML report at:", htmlPath)
 
 	return nil
-}
-
-func resolveHtmlPath() string {
-	parts := strings.Split(cyclonedxReportPath, ".")
-
-	if parts[len(parts)-1] == "json" {
-		parts[len(parts)-1] = "html"
-	} else {
-		parts = append(parts, "html")
-	}
-
-	return strings.Join(parts, ".")
 }

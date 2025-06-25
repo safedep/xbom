@@ -1,4 +1,4 @@
-package bom
+package reporter
 
 import (
 	"fmt"
@@ -11,11 +11,10 @@ import (
 	"github.com/google/uuid"
 	"github.com/safedep/dry/log"
 	"github.com/safedep/dry/utils"
-	"github.com/safedep/xbom/pkg/codeanalysis"
 	"github.com/safedep/xbom/pkg/common"
 )
 
-type CycloneDXGeneratorConfig struct {
+type CycloneDXReporterConfig struct {
 	Tool common.ToolMetadata
 
 	// Path defines the output file path
@@ -29,19 +28,19 @@ type CycloneDXGeneratorConfig struct {
 	SerialNumber string
 }
 
-type CycloneDXGenerator struct {
-	config              CycloneDXGeneratorConfig
+type CycloneDXReporter struct {
+	config              CycloneDXReporterConfig
 	bom                 *cdx.BOM
 	toolComponent       cdx.Component
 	rootComponentBomref string
 	bomEcosystems       map[string]bool
 }
 
-var _ BomGenerator = (*CycloneDXGenerator)(nil)
+var _ Reporter = (*CycloneDXReporter)(nil)
 
 var cdxUUIDRegexp = regexp.MustCompile(`^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
 
-func NewCycloneDXBomGenerator(config CycloneDXGeneratorConfig) (*CycloneDXGenerator, error) {
+func NewCycloneDXBomReporter(config CycloneDXReporterConfig) (*CycloneDXReporter, error) {
 	bom := cdx.NewBOM()
 	bom.SpecVersion = cdx.SpecVersion1_6
 
@@ -95,7 +94,7 @@ func NewCycloneDXBomGenerator(config CycloneDXGeneratorConfig) (*CycloneDXGenera
 	bom.Dependencies = utils.PtrTo([]cdx.Dependency{})
 	bom.Services = utils.PtrTo([]cdx.Service{})
 
-	return &CycloneDXGenerator{
+	return &CycloneDXReporter{
 		config:              config,
 		bom:                 bom,
 		toolComponent:       toolComponent,
@@ -104,8 +103,11 @@ func NewCycloneDXBomGenerator(config CycloneDXGeneratorConfig) (*CycloneDXGenera
 	}, nil
 }
 
-// RecordCodeAnalysisFindings implements BomGenerator.
-func (c *CycloneDXGenerator) RecordCodeAnalysisFindings(findings *codeanalysis.CodeAnalysisFindings) error {
+func (c *CycloneDXReporter) Name() string {
+	return "cyclonedx"
+}
+
+func (c *CycloneDXReporter) RecordCodeAnalysisFindings(findings *common.CodeAnalysisFindings) error {
 	for signatureId, signatureMatchResults := range findings.SignatureWiseMatchResults {
 		if len(signatureMatchResults) == 0 {
 			continue
@@ -168,7 +170,7 @@ func (c *CycloneDXGenerator) RecordCodeAnalysisFindings(findings *codeanalysis.C
 	return nil
 }
 
-func (c *CycloneDXGenerator) getKnownTaggedProperties(tags []string) []cdx.Property {
+func (c *CycloneDXReporter) getKnownTaggedProperties(tags []string) []cdx.Property {
 	knownTags := []string{
 		"ai",
 		"ml",
@@ -190,27 +192,7 @@ func (c *CycloneDXGenerator) getKnownTaggedProperties(tags []string) []cdx.Prope
 	return properties
 }
 
-func (r *CycloneDXGenerator) finaliseBom() {
-	bomGenerationTime := time.Now().UTC()
-
-	r.bom.Metadata.Timestamp = bomGenerationTime.Format(time.RFC3339)
-
-	r.bom.Annotations = utils.PtrTo([]cdx.Annotation{
-		{
-			BOMRef: "metadata-annotations",
-			Subjects: utils.PtrTo([]cdx.BOMReference{
-				cdx.BOMReference(r.rootComponentBomref),
-			}),
-			Annotator: &cdx.Annotator{
-				Component: &r.toolComponent,
-			},
-			Timestamp: bomGenerationTime.Format(time.RFC3339),
-			Text:      fmt.Sprintf("This Software Bill-of-Materials (SBOM) document was created on %s with %s. The data was captured during the build lifecycle phase. The document describes '%s'. It has total %d components.", bomGenerationTime.Format("Monday, January 2, 2006"), r.config.Tool.Name, r.config.ApplicationComponentName, len(*r.bom.Components)),
-		},
-	})
-}
-
-func (r *CycloneDXGenerator) Finish() error {
+func (r *CycloneDXReporter) Finish() error {
 	r.finaliseBom()
 
 	log.Infof("Writing CycloneDX report to %s", r.config.Path)
@@ -233,5 +215,27 @@ func (r *CycloneDXGenerator) Finish() error {
 		return err
 	}
 
+	fmt.Printf("📄 BOM saved at %s\n", r.config.Path)
+
 	return nil
+}
+
+func (r *CycloneDXReporter) finaliseBom() {
+	bomGenerationTime := time.Now().UTC()
+
+	r.bom.Metadata.Timestamp = bomGenerationTime.Format(time.RFC3339)
+
+	r.bom.Annotations = utils.PtrTo([]cdx.Annotation{
+		{
+			BOMRef: "metadata-annotations",
+			Subjects: utils.PtrTo([]cdx.BOMReference{
+				cdx.BOMReference(r.rootComponentBomref),
+			}),
+			Annotator: &cdx.Annotator{
+				Component: &r.toolComponent,
+			},
+			Timestamp: bomGenerationTime.Format(time.RFC3339),
+			Text:      fmt.Sprintf("This Software Bill-of-Materials (SBOM) document was created on %s with %s. The data was captured during the build lifecycle phase. The document describes '%s'. It has total %d components.", bomGenerationTime.Format("Monday, January 2, 2006"), r.config.Tool.Name, r.config.ApplicationComponentName, len(*r.bom.Components)),
+		},
+	})
 }
