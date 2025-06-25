@@ -101,7 +101,7 @@ Currently, `xbom` supports the following programming languages:
     </tr>
   </table>
 </div>
-<div align="center">
+<div style="text-align: center;">
   <strong>ℹ️ To request support for a new framework, please <a href="https://github.com/safedep/xbom/issues/new">create an issue</a>.</strong>
 </div>
 
