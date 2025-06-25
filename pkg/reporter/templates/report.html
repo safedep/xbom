@@ -58,23 +58,38 @@
 
         <!-- Filters -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-                <label class="block text-gray-700 mb-2" for="signatureSelect">Signature ID</label>
-                <select id="signatureSelect" class="w-full border border-gray-300 rounded-lg p-2" multiple>
-                    {{ range $index, $row := .Rows }}
-                    <option value="{{ $row.Signature_ID }}">{{ $row.Signature_ID }}</option>
-                    {{ end }}
-                </select>
-            </div>
+          <div>
+            <label class="block text-gray-700 mb-2" for="signatureSelect"
+              >Signature ID</label
+            >
+            <select
+              id="signatureSelect"
+              class="w-full border border-gray-300 rounded-lg p-2"
+              multiple
+            >
+              {{ range $index, $row := .Rows }}
+              <option value="{{ $row.Signature_ID }}">
+                {{ $row.Signature_ID }}
+              </option>
+              {{ end }}
+            </select>
+          </div>
 
-            <div>
-                <label class="block text-gray-700 mb-2" for="tagsSelect">Tags</label>
-                <select id="tagsSelect" class="w-full border border-gray-300 rounded-lg p-2" multiple>
-                    {{ range $tag := .UniqueTags }}
-                        <option value="{{ $tag }}">{{ $tag }}</option>
-                    {{ end }}
-                </select>
-            </div>
+          <div>
+            <label class="block text-gray-700 mb-2" for="tagsSelect">
+              Tags
+            </label
+            >
+            <select
+              id="tagsSelect"
+              class="w-full border border-gray-300 rounded-lg p-2"
+              multiple
+            >
+              {{ range $tag := .UniqueTags }}
+              <option value="{{ $tag }}">{{ $tag }}</option>
+              {{ end }}
+            </select>
+          </div>
         </div>
 
         <!-- Table -->
@@ -220,45 +235,55 @@
       }
 
       // Filtering logic for Signature ID and Tags
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // Initialize Choices.js for multi-selects
-        const signatureChoices = new Choices('#signatureSelect', {
+        const signatureChoices = new Choices("#signatureSelect", {
           removeItemButton: true,
           placeholder: true,
-          placeholderValue: 'Select signatures...'
+          placeholderValue: "Select signatures...",
         });
-        const tagsChoices = new Choices('#tagsSelect', {
+        const tagsChoices = new Choices("#tagsSelect", {
           removeItemButton: true,
           placeholder: true,
-          placeholderValue: 'Select tags...'
+          placeholderValue: "Select tags...",
         });
 
         function filterTable() {
-          const selectedSignatures = signatureChoices.getValue().map(item => item.value);
-          const selectedTags = tagsChoices.getValue().map(item => item.value);
-          const rows = document.querySelectorAll('#signatureTable > tr');
+          const selectedSignatures = signatureChoices
+            .getValue()
+            .map((item) => item.value);
+          const selectedTags = tagsChoices.getValue().map((item) => item.value);
+          const rows = document.querySelectorAll("#signatureTable > tr");
 
           for (let i = 0; i < rows.length; i += 2) {
             const row = rows[i];
-            const detailsRow = rows[i+1];
-            const signatureCell = row.querySelector('td:nth-child(1)');
-            const tagsCell = row.querySelector('td:nth-child(3)');
+            const detailsRow = rows[i + 1];
+            const signatureCell = row.querySelector("td:nth-child(1)");
+            const tagsCell = row.querySelector("td:nth-child(3)");
             if (!signatureCell || !tagsCell) continue;
             const signatureId = signatureCell.textContent.trim();
-            const tags = tagsCell.textContent.split(',').map(t => t.trim());
-            const matchesSignature = selectedSignatures.length === 0 || selectedSignatures.includes(signatureId);
-            const matchesTags = selectedTags.length === 0 || selectedTags.some(tag => tags.includes(tag));
+            const tags = tagsCell.textContent.split(",").map((t) => t.trim());
+            const matchesSignature =
+              selectedSignatures.length === 0 ||
+              selectedSignatures.includes(signatureId);
+            const matchesTags =
+              selectedTags.length === 0 ||
+              selectedTags.some((tag) => tags.includes(tag));
             if (matchesSignature && matchesTags) {
-              row.style.display = '';
-              if (detailsRow) detailsRow.style.display = '';
+              row.style.display = "";
+              if (detailsRow) detailsRow.style.display = "";
             } else {
-              row.style.display = 'none';
-              if (detailsRow) detailsRow.style.display = 'none';
+              row.style.display = "none";
+              if (detailsRow) detailsRow.style.display = "none";
             }
           }
         }
-        document.getElementById('signatureSelect').addEventListener('change', filterTable);
-        document.getElementById('tagsSelect').addEventListener('change', filterTable);
+        document
+          .getElementById("signatureSelect")
+          .addEventListener("change", filterTable);
+        document
+          .getElementById("tagsSelect")
+          .addEventListener("change", filterTable);
       });
     </script>
 
@@ -271,13 +296,13 @@
           <a
             href="https://safedep.io/privacy"
             class="hover:text-gray-400 transition"
-            >Privacy Policy</a
-          >
+            >Privacy Policy
+          </a>
           <a
             href="https://safedep.io/terms"
             class="hover:text-gray-400 transition"
-            >Terms of Service</a
-          >
+            >Terms of Service
+          </a>
         </div>
       </div>
     </footer>
