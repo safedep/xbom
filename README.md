@@ -1,18 +1,17 @@
 <div align="center">
   <h1>xBom</h1>
-  
   <p><strong>Generate BOMs enriched with AI, SaaS and more using Static Code Analysis</strong></p>
 </div>
 
 <div align="center">
-
-[![Go Report Card](https://goreportcard.com/badge/github.com/safedep/xbom)](https://goreportcard.com/report/github.com/safedep/xbom)
-[![License](https://img.shields.io/github/license/safedep/xbom)](https://github.com/safedep/xbom/blob/main/LICENSE)
-[![Release](https://img.shields.io/github/v/release/safedep/xbom)](https://github.com/safedep/xbom/releases)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/safedep/xbom/badge)](https://api.securityscorecards.dev/projects/github.com/safedep/xbom)
-[![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
-[![CodeQL](https://github.com/safedep/xbom/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/safedep/xbom/actions/workflows/codeql.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/safedep/xbom.svg)](https://pkg.go.dev/github.com/safedep/xbom)
+  
+  [![Go Report Card](https://goreportcard.com/badge/github.com/safedep/xbom)](https://goreportcard.com/report/github.com/safedep/xbom)
+  [![License](https://img.shields.io/github/license/safedep/xbom)](https://github.com/safedep/xbom/blob/main/LICENSE)
+  [![Release](https://img.shields.io/github/v/release/safedep/xbom)](https://github.com/safedep/xbom/releases)
+  [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/safedep/xbom/badge)](https://api.securityscorecards.dev/projects/github.com/safedep/xbom)
+  [![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
+  [![CodeQL](https://github.com/safedep/xbom/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/safedep/xbom/actions/workflows/codeql.yml)
+  [![Go Reference](https://pkg.go.dev/badge/github.com/safedep/xbom.svg)](https://pkg.go.dev/github.com/safedep/xbom)
 
 </div>
 
@@ -31,7 +30,6 @@ Modern applications rely on much more than just open-source libraries. They ofte
 ✅ **Robust Compliance** - single tool to comply with all your software supply chain compliances
 
 ✅ **Multi-ecosystem support** — Java, Python and more coming up !
-
 
 ## 👀 xbom in action
 
@@ -88,6 +86,7 @@ Currently, `xbom` supports the following programming languages:
     </tr>
   </table>
 </div>
+
 <div align="center">
   <h1><strong>Cloud</strong></h1>
   <table>
@@ -101,11 +100,10 @@ Currently, `xbom` supports the following programming languages:
     </tr>
   </table>
 </div>
-<div align="center">
 
-<center>
+<div align="center">
   <strong>ℹ️ To request support for a new framework, please <a href="https://github.com/safedep/xbom/issues/new">create an issue</a>.</strong>
-</center>
+</div>
 
 ## 👀 Visual convenience
 
@@ -128,7 +126,6 @@ Refer to [CONTRIBUTING.md](CONTRIBUTING.md)
 ## Limitations
 
 `xbom` is currently limited to AI BOM generation only. It uses static code analysis to identify AI products used in the code base. For generating a more comprehensive SBOM with library dependencies, you can use [vet](https://github.com/safedep/vet).
-
 
 ## Telemetry
 
