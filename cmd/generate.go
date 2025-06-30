@@ -107,23 +107,24 @@ func internalGenerate() error {
 			SignaturesToMatch: signaturesToMatch,
 			Callbacks: &codeanalysis.CodeAnalysisCallbackRegistry{
 				OnStart: func() error {
-					ui.StartSpinner("Analysing code")
+					ui.StartSpinner("Analyzing code")
 					return nil
 				},
 				OnFinish: func() error {
 					ui.StopSpinner("✅ Code analysis completed.")
+					ui.Println()
 					return nil
 				},
 				OnErr: func(message string, err error) {
 					log.Errorf("Error in code analysis workflow: %s: %v", message, err)
-					ui.StopSpinner("❗Code analysis failed")
+					ui.StopSpinner(fmt.Sprintf("❗Code analysis failed with error: %s", err.Error()))
 				},
 			},
 		},
 		reporters,
 	)
 
-	// If xbom is used as a library, we may use the finalised findings here
+	// If xbom is used as a library, we may use the finalized findings here
 	_, err = workflow.Execute()
 	if err != nil {
 		return fmt.Errorf("failed to execute code analysis workflow: %w", err)
@@ -131,8 +132,9 @@ func internalGenerate() error {
 
 	// Nudge user to visualise the results
 	if htmlReportPath == "" {
-		fmt.Println("\nTip: You can visualise the report as HTML using \"--html\" flag.")
-		fmt.Println("Example: xbom generate --html /tmp/report.html")
+		ui.Println()
+		ui.Println("Tip: You can visualise the report as HTML using \"--html\" flag.")
+		ui.Println("Example: xbom generate --html /tmp/report.html")
 	}
 
 	return nil
