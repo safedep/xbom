@@ -53,33 +53,33 @@ func NewCodeAnalysisWorkflow(config CodeAnalysisWorkflowConfig, reporters []repo
 }
 
 func (w *CodeAnalysisWorkflow) Execute() (*common.CodeAnalysisFindings, error) {
-	err := w.config.Callbacks.OnStart()
+	err := w.config.Callbacks.dispatchOnStart()
 	if err != nil {
-		w.config.Callbacks.OnErr(ErrOnStartCallback.Error(), err)
+		w.config.Callbacks.dispatchOnErr(ErrOnStartCallback.Error(), err)
 		return nil, fmt.Errorf("%w: %w", ErrOnStartCallback, err)
 	}
 
 	err = w.executeInternal()
 	if err != nil {
-		w.config.Callbacks.OnErr(ErrPerformCodeAnalysis.Error(), err)
+		w.config.Callbacks.dispatchOnErr(ErrPerformCodeAnalysis.Error(), err)
 		return nil, fmt.Errorf("%w: %w", ErrPerformCodeAnalysis, err)
 	}
 
 	err = w.reportCodeAnalysisFindings()
 	if err != nil {
-		w.config.Callbacks.OnErr(ErrReportCodeAnalysisFindings.Error(), err)
+		w.config.Callbacks.dispatchOnErr(ErrReportCodeAnalysisFindings.Error(), err)
 		return nil, fmt.Errorf("%w: %w", ErrReportCodeAnalysisFindings, err)
 	}
 
 	err = w.finishReport()
 	if err != nil {
-		w.config.Callbacks.OnErr(ErrFinishReporting.Error(), err)
+		w.config.Callbacks.dispatchOnErr(ErrFinishReporting.Error(), err)
 		return nil, fmt.Errorf("%w: %w", ErrFinishReporting, err)
 	}
 
-	err = w.config.Callbacks.OnFinish()
+	err = w.config.Callbacks.dispatchOnFinish()
 	if err != nil {
-		w.config.Callbacks.OnErr(ErrOnFinishCallback.Error(), err)
+		w.config.Callbacks.dispatchOnErr(ErrOnFinishCallback.Error(), err)
 		return nil, fmt.Errorf("%w: %w", ErrOnFinishCallback, err)
 	}
 

@@ -9,5 +9,5 @@ type CodeAnalysisWorkflowConfig struct {
 	Tool              common.ToolMetadata
 	SourcePath        string
 	SignaturesToMatch []*callgraphv1.Signature
-	Callbacks         *CodeAnalysisCallbackRegistry
+	Callbacks         CodeAnalysisCallbackRegistry
 }
