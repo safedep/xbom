@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/safedep/xbom/internal/ui"
 	"github.com/safedep/xbom/pkg/common"
 )
 
@@ -90,6 +91,7 @@ func (r *SummaryReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *commo
 }
 
 func (r *SummaryReporter) Finish() error {
+	ui.Println()
 	r.sigTable.Render()
 
 	return nil

@@ -105,14 +105,13 @@ func internalGenerate() error {
 			Tool:              xbomTool,
 			SourcePath:        codeDirectory,
 			SignaturesToMatch: signaturesToMatch,
-			Callbacks: &codeanalysis.CodeAnalysisCallbackRegistry{
+			Callbacks: codeanalysis.CodeAnalysisCallbackRegistry{
 				OnStart: func() error {
 					ui.StartSpinner("Analyzing code")
 					return nil
 				},
 				OnFinish: func() error {
 					ui.StopSpinner("✅ Code analysis completed.")
-					ui.Println()
 					return nil
 				},
 				OnErr: func(message string, err error) {
