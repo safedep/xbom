@@ -173,6 +173,9 @@ func (c *CycloneDXReporter) RecordCodeAnalysisFindings(findings *common.CodeAnal
 func (c *CycloneDXReporter) getKnownTaggedProperties(tags []string) []cdx.Property {
 	knownTags := []string{
 		"ai",
+		"cryptography",
+		"encryption",
+		"hash",
 		"ml",
 		"iaas",
 		"paas",
