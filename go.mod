@@ -3,13 +3,13 @@ module github.com/safedep/xbom
 go 1.24.3
 
 require (
-	buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250610075857-7cfdb61a0bfa.1
+	buf.build/gen/go/safedep/api/protocolbuffers/go v1.36.6-20250704090109-f29b2dffa5c5.1
 	github.com/CycloneDX/cyclonedx-go v0.9.2
 	github.com/PuerkitoBio/goquery v1.10.3
 	github.com/google/uuid v1.6.0
 	github.com/jedib0t/go-pretty/v6 v6.6.7
 	github.com/posthog/posthog-go v1.5.12
-	github.com/safedep/code v0.0.0-20250619080228-57f5b7b5e58c
+	github.com/safedep/code v0.0.0-20250704181151-312e67f151dd
 	github.com/safedep/dry v0.0.0-20250618113059-9f8b677e299c
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
@@ -20,8 +20,8 @@ require (
 require (
 	4d63.com/gocheckcompilerdirectives v1.3.0 // indirect
 	4d63.com/gochecknoglobals v0.2.2 // indirect
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250425153114-8976f5be98c1.1 // indirect
-	buf.build/go/protovalidate v0.12.0 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250625184727-c923a0c2a132.1 // indirect
+	buf.build/go/protovalidate v0.13.1 // indirect
 	cel.dev/expr v0.24.0 // indirect
 	github.com/4meepo/tagalign v1.4.2 // indirect
 	github.com/Abirdcfly/dupword v0.1.3 // indirect

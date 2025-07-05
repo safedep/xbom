@@ -36,24 +36,6 @@ signatures:
           - type: call
             value: "@azure/cosmos.*"
 
-  - id: azure.cosmos.container
-    description: "Azure Cosmos DB Container"
-    vendor: "Microsoft"
-    product: "Azure"
-    service: "Cosmos DB Container"
-    tags: [cosmos, database, container, paas]
-    languages:
-      python:
-        match: any
-        conditions:
-          - type: call
-            value: "azure.cosmos.*"
-      javascript:
-        match: any
-        conditions:
-          - type: call
-            value: "@azure/cosmos.*"
-
   - id: azure.IAM
     description: "Azure IAM services"
     vendor: "Microsoft"
