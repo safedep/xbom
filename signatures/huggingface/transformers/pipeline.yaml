@@ -1,0 +1,21 @@
+version: 0.1
+
+# Transformers Pipeline Signatures
+# Pipeline is the inference engine for Hugging Face Transformers, allowing users to easily run models for various tasks like text generation, translation, and more
+# References -
+# https://huggingface.co/docs/transformers/main_classes/pipelines
+
+signatures:
+  - id: transformers.pipeline
+    description: "Pipeline is the inference engine for Hugging Face Transformers, allowing users to easily run models for various tasks like text generation, translation, and more."
+    vendor: "Hugging Face"
+    product: "Transformers"
+    service: "Inference"
+    tags: [pipeline, transformers]
+    languages:
+      python:
+        match: any
+        conditions:
+          - type: call
+            value: "transformers.pipeline"
+
