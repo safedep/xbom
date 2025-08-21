@@ -39,7 +39,7 @@ func main() {
 	command.AddCommand(cmd.NewGenerateCommand())
 	command.AddCommand(cmd.NewValidateCommand())
 
-	// On --help / -h
+	// Print banner on --help / -h
 	command.SetHelpFunc(func(command *cobra.Command, args []string) {
 		fmt.Print(ui.GenerateXBOMBanner(version.Version, version.Commit))
 		fmt.Println(command.UsageString())
