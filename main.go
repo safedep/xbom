@@ -8,6 +8,8 @@ import (
 	"github.com/safedep/dry/obs"
 	"github.com/safedep/xbom/cmd"
 	"github.com/safedep/xbom/internal/analytics"
+	"github.com/safedep/xbom/internal/ui"
+	"github.com/safedep/xbom/internal/version"
 	"github.com/spf13/cobra"
 )
 
@@ -36,6 +38,12 @@ func main() {
 	command.AddCommand(cmd.NewVersionCommand())
 	command.AddCommand(cmd.NewGenerateCommand())
 	command.AddCommand(cmd.NewValidateCommand())
+
+	// Print banner on --help / -h
+	command.SetHelpFunc(func(command *cobra.Command, args []string) {
+		fmt.Print(ui.GenerateXBOMBanner(version.Version, version.Commit))
+		fmt.Println(command.UsageString())
+	})
 
 	defer analytics.Close()
 
