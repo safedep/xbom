@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/fs"
 	"path"
+	"path/filepath"
 
 	callgraphv1 "buf.build/gen/go/safedep/api/protocolbuffers/go/safedep/messages/code/callgraph/v1"
 	"github.com/safedep/code/plugin/callgraph"
@@ -61,6 +62,11 @@ func LoadSignatures(vendor string, product string, service string) ([]*callgraph
 
 	err := fs.WalkDir(signatureFiles, signaturesPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil || d.IsDir() {
+			return nil
+		}
+
+		// Skip non-YAML files (e.g., .go files in the signatures directory)
+		if filepath.Ext(path) != ".yaml" && filepath.Ext(path) != ".yml" {
 			return nil
 		}
 

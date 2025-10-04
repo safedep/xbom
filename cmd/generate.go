@@ -19,6 +19,9 @@ var (
 	codeDirectory       string
 	cyclonedxReportPath string
 	htmlReportPath      string
+	summaryMaxResults   int
+	summaryNoStats      bool
+	summaryNoColor      bool
 )
 
 func NewGenerateCommand() *cobra.Command {
@@ -42,6 +45,12 @@ func NewGenerateCommand() *cobra.Command {
 		"Generate CycloneDX BOM to file")
 	cmd.Flags().StringVarP(&htmlReportPath, "html", "", "",
 		"Generate HTML report to file")
+	cmd.Flags().IntVarP(&summaryMaxResults, "summary-limit", "", 20,
+		"Maximum number of results to display in summary (0 for unlimited)")
+	cmd.Flags().BoolVarP(&summaryNoStats, "summary-no-stats", "", false,
+		"Disable statistics panel in summary output")
+	cmd.Flags().BoolVarP(&summaryNoColor, "summary-no-color", "", false,
+		"Disable colored output in summary")
 
 	// Add validations that should trigger a fail fast condition
 	cmd.PreRun = func(cmd *cobra.Command, args []string) {
@@ -72,7 +81,11 @@ func internalGenerate() error {
 
 	reporters := []reporter.Reporter{}
 
-	summaryReporter, err := reporter.NewSummaryReporter(reporter.SummaryReporterConfig{})
+	summaryReporter, err := reporter.NewSummaryReporter(reporter.SummaryReporterConfig{
+		MaxResults: summaryMaxResults,
+		ShowStats:  !summaryNoStats,
+		Colorize:   !summaryNoColor,
+	})
 	if err != nil {
 		return fmt.Errorf("failed to create summary reporter: %w", err)
 	}

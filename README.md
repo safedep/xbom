@@ -18,6 +18,7 @@
 ## 🎯 Why xbom?
 
 Modern applications rely on much more than just open-source libraries. They often include:
+
 - AI SDKs 🧠
 - ML models 🤖
 - 3rd party SaaS APIs ☁️
@@ -29,7 +30,7 @@ Modern applications rely on much more than just open-source libraries. They ofte
 
 ✅ **Robust Compliance** - single tool to comply with all your software supply chain compliances
 
-✅ **Multi-ecosystem support** — Java, Python and more coming up !
+✅ **Multi-ecosystem support** — Java, Python, Go and more coming up !
 
 ## 👀 xbom in action
 
@@ -46,7 +47,6 @@ brew install safedep/tap/xbom
 
 or download a **[pre-built binary](https://github.com/safedep/xbom/releases)**
 
-
 ```bash
 # Generate BOM for your source code
 xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
@@ -55,12 +55,14 @@ xbom generate --dir /path/to/code --bom /path/to/bom.cdx.json
 This will generate a [CycloneDX v1.6](https://cyclonedx.org/docs/1.6/json/) SBOM with AI components detected in the code base.
 
 ## Supported Languages
+
 Currently, `xbom` supports the following programming languages:
 
-| Language   | Status   |
-| ---------- | -------- |
+| Language   | Status    |
+| ---------- | --------- |
 | Python     | ✅ Active |
 | Java       | ✅ Active |
+| Go         | ✅ Active |
 | JavaScript | 🚧 WIP    |
 
 ## Supported BOMs

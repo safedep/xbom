@@ -10,6 +10,7 @@ import (
 	"github.com/safedep/xbom/internal/analytics"
 	"github.com/safedep/xbom/internal/ui"
 	"github.com/safedep/xbom/internal/version"
+	_ "github.com/safedep/xbom/signatures" // Initialize embedded signatures
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,20 @@ func main() {
 		Use:              "xbom [OPTIONS] COMMAND [ARG...]",
 		Short:            "[ Generate BOMs enriched with AI, ML, SaaS, Cloud and more ]",
 		TraverseChildren: true,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			if cmd == cmd.Root() && len(args) == 0 {
+				return nil
+			}
+
+			// Initialize analytics only for non-help commands
+			analytics.Init()
+			defer analytics.Close()
+
+			analytics.TrackCommandRun()
+			analytics.TrackCI()
+
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) == 0 {
 				return cmd.Help()
@@ -44,11 +59,6 @@ func main() {
 		fmt.Print(ui.GenerateXBOMBanner(version.Version, version.Commit))
 		fmt.Println(command.UsageString())
 	})
-
-	defer analytics.Close()
-
-	analytics.TrackCommandRun()
-	analytics.TrackCI()
 
 	if err := command.Execute(); err != nil {
 		os.Exit(1)
