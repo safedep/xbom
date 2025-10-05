@@ -10,7 +10,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jedib0t/go-pretty/v6 v6.6.7
 	github.com/posthog/posthog-go v1.5.12
-	github.com/safedep/code v0.0.0-20251005163415-d626bfbdff4f
+	github.com/safedep/code v0.0.0-20251005172610-55bf15cb03ec
 	github.com/safedep/dry v0.0.0-20250618113059-9f8b677e299c
 	github.com/spf13/cobra v1.10.1
 	github.com/stretchr/testify v1.11.1
