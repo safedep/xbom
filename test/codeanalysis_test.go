@@ -102,8 +102,10 @@ func TestCodeAnalysisE2E(t *testing.T) {
 				{signatureID: "javascript.process.exec", filePath: "main.js", condition: "child_process/exec"},
 				// Crypto operations
 				{signatureID: "javascript.crypto.hash", filePath: "main.js", condition: "crypto/createHash"},
+				// Database operations
+				{signatureID: "javascript.database.sql", filePath: "main.js", condition: "sqlite3/Database"},
 			},
-			minMatchCount: 8,
+			minMatchCount: 9,
 		},
 	}
 

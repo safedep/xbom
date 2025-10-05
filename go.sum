@@ -167,8 +167,8 @@ github.com/rivo/uniseg v0.4.7/go.mod h1:FN3SvrM+Zdj16jyLfmOkMNblXMcoc8DfTHruCPUc
 github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=
 github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7so1lCWt35ZSgc=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
-github.com/safedep/code v0.0.0-20251005121150-ed1abbe6028c h1:1v/3/1CsoeCfchkfOPanfFwA3o9q5bPc2VAhp4a1wpo=
-github.com/safedep/code v0.0.0-20251005121150-ed1abbe6028c/go.mod h1:PbEWp7oADydFiosaUFAA+aoNugd2bxDqddMfJ6O7zbk=
+github.com/safedep/code v0.0.0-20251005163415-d626bfbdff4f h1:2itdwpihNHUyLVozVaG+WLVWEfmpBkOyQuTj6f8kHOQ=
+github.com/safedep/code v0.0.0-20251005163415-d626bfbdff4f/go.mod h1:PbEWp7oADydFiosaUFAA+aoNugd2bxDqddMfJ6O7zbk=
 github.com/safedep/dry v0.0.0-20250618113059-9f8b677e299c h1:xr6P3xzQqxPx93qbH/LPjyK46oEEA6N0nYyiQSjikkI=
 github.com/safedep/dry v0.0.0-20250618113059-9f8b677e299c/go.mod h1:8GbUOzdf46FT4j5h9lw9DdA3wM9NgIVEZjTfkzNe+Cw=
 github.com/schollz/progressbar/v3 v3.18.0 h1:uXdoHABRFmNIjUfte/Ex7WtuyVslrw2wVPQmCN62HpA=
