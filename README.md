@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>xBom</h1>
+  <h1>SafeDep xBom</h1>
   <p><strong>Generate BOMs enriched with AI, SaaS and more using Static Code Analysis</strong></p>
 </div>
 
@@ -63,7 +63,7 @@ Currently, `xbom` supports the following programming languages:
 | Python     | ✅ Active |
 | Java       | ✅ Active |
 | Go         | ✅ Active |
-| JavaScript | 🚧 WIP    |
+| Javascript | ✅ Active |
 
 ## Supported BOMs
 
