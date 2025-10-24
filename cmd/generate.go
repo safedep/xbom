@@ -16,6 +16,8 @@ import (
 )
 
 var (
+	packageURL          string
+	appName             string
 	codeDirectory       string
 	cyclonedxReportPath string
 	htmlReportPath      string
@@ -41,6 +43,10 @@ func NewGenerateCommand() *cobra.Command {
 
 	cmd.Flags().StringVarP(&codeDirectory, "dir", "D", wd,
 		"Directory for analysing and generating BOM")
+	cmd.Flags().StringVarP(&packageURL, "purl", "P", "",
+		"Package URL of a supported package")
+	cmd.Flags().StringVarP(&appName, "app-name", "", "",
+		"App name to include in CycloneDX report")
 	cmd.Flags().StringVarP(&cyclonedxReportPath, "bom", "", "",
 		"Generate CycloneDX BOM to file")
 	cmd.Flags().StringVarP(&htmlReportPath, "html", "", "",
@@ -66,11 +72,22 @@ func NewGenerateCommand() *cobra.Command {
 
 func generate() {
 	analytics.TrackCommandGenerate()
-	command.FailOnError("generate", internalGenerate())
+	command.FailOnError("generate", internalGenerateMulti())
 }
 
-func internalGenerate() error {
-	log.Infof("Generating BOM for source - %s", codeDirectory)
+// internalGenerateMulti handles multiple input adapters before invoking the
+// core scanning workflow
+func internalGenerateMulti() error {
+	if appName == "" {
+		appName = path.Base(codeDirectory)
+	}
+
+	return internalGenerate(appName, codeDirectory)
+}
+
+// internalGenerate executes the core scanning workflow to generate an XBOM report
+func internalGenerate(appName, codeDir string) error {
+	log.Infof("Generating BOM for source - %s", codeDir)
 
 	// provide grouping filters using signatures.LoadSignatures("microsoft", "azure", "servicebus")
 	signaturesToMatch, err := signatures.LoadAllSignatures()
@@ -95,7 +112,7 @@ func internalGenerate() error {
 		cdxReporter, err := reporter.NewCycloneDXBomReporter(reporter.CycloneDXReporterConfig{
 			Tool:                     xbomTool,
 			Path:                     cyclonedxReportPath,
-			ApplicationComponentName: path.Base(codeDirectory),
+			ApplicationComponentName: appName,
 		})
 		if err != nil {
 			return fmt.Errorf("failed to create CycloneDX reporter: %w", err)
@@ -116,7 +133,7 @@ func internalGenerate() error {
 	workflow := codeanalysis.NewCodeAnalysisWorkflow(
 		codeanalysis.CodeAnalysisWorkflowConfig{
 			Tool:              xbomTool,
-			SourcePath:        codeDirectory,
+			SourcePath:        codeDir,
 			SignaturesToMatch: signaturesToMatch,
 			Callbacks: codeanalysis.CodeAnalysisCallbackRegistry{
 				OnStart: func() error {
