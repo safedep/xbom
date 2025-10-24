@@ -7,6 +7,8 @@ import (
 )
 
 func TestSignatures(t *testing.T) {
-	_, err := LoadAllSignatures()
+	sigs, err := LoadAllSignatures()
+
 	assert.NoError(t, err, "Signatures should be valid")
+	assert.Equal(t, len(sigs), 0, "No signature is actually loaded here")
 }

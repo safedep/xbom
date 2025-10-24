@@ -31,6 +31,9 @@ dist/
 
 # IDEs and editors
 .vscode/
+.claude/
+CLAUDE.md
 
 # MacOS specific files
 **/.DS_Store
+

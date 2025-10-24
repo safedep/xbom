@@ -3,6 +3,7 @@ package analytics
 const (
 	eventRun             = "xbom_command_run"
 	eventCommandGenerate = "xbom_command_generate"
+	eventCommandValidate = "xbom_command_validate"
 
 	eventXbomGenerateEnvDocker        = "xbom_command_generate_env_docker"
 	eventXbomGenerateEnvGitHubActions = "xbom_command_generate_env_github_actions"
@@ -15,6 +16,10 @@ func TrackCommandRun() {
 
 func TrackCommandGenerate() {
 	TrackEvent(eventCommandGenerate)
+}
+
+func TrackCommandValidate() {
+	TrackEvent(eventCommandValidate)
 }
 
 func TrackCommandGenerateEnvDocker() {
