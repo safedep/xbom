@@ -44,12 +44,12 @@ func NewGenerateCommand() *cobra.Command {
 	cmd.Flags().StringVarP(&codeDirectory, "dir", "D", wd,
 		"Directory for analysing and generating BOM")
 	cmd.Flags().StringVarP(&packageURL, "purl", "P", "",
-		"Package URL of a supported package")
+		"Package URL of a supported OSS package (eg. pkg:/npm/express@4.17.1")
 	cmd.Flags().StringVarP(&appName, "app-name", "", "",
-		"App name to include in CycloneDX report")
+		"App name to include in CycloneDX BOM")
 	cmd.Flags().StringVarP(&cyclonedxReportPath, "bom", "", "",
 		"Generate CycloneDX BOM to file")
-	cmd.Flags().StringVarP(&htmlReportPath, "html", "", "",
+	cmd.Flags().StringVarP(&htmlReportPath, "report-html", "", "",
 		"Generate HTML report to file")
 	cmd.Flags().IntVarP(&summaryMaxResults, "summary-limit", "", 20,
 		"Maximum number of results to display in summary (0 for unlimited)")
@@ -78,6 +78,10 @@ func generate() {
 // internalGenerateMulti handles multiple input adapters before invoking the
 // core scanning workflow
 func internalGenerateMulti() error {
+	return internalGenerateDirectory()
+}
+
+func internalGenerateDirectory() error {
 	if appName == "" {
 		appName = path.Base(codeDirectory)
 	}
@@ -162,8 +166,8 @@ func internalGenerate(appName, codeDir string) error {
 	// Nudge user to visualise the results
 	if htmlReportPath == "" {
 		ui.Println()
-		ui.Println("Tip: You can visualise the report as HTML using \"--html\" flag.")
-		ui.Println("Example: xbom generate --html /tmp/report.html")
+		ui.Println("Tip: You can visualise the report as HTML using \"--report-html\" flag.")
+		ui.Println("Example: xbom generate --report-html /tmp/report.html")
 	}
 
 	return nil
