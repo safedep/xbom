@@ -178,18 +178,29 @@
                           </div>
                           {{ if $item.Snippet }}
                           <div class="mt-2">
+                            {{ if $item.Snippet.SourceUnavailable }}
+                            <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
+                              ⚠️ Source file unavailable - cannot display code snippet
+                            </div>
+                            {{ else }}
+                            {{ if $item.Snippet.WasTruncated }}
+                            <div class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-2">
+                              ⚠️ Snippet truncated due to size limit
+                            </div>
+                            {{ end }}
                             <div class="relative">
                               <button
                                 onclick="copyToClipboard(this, '{{ $item.Snippet.RawContent }}')"
-                                class="absolute right-2 top-2 text-xs bg-gray-700 text-white px-2 py-1 rounded hover:bg-gray-600"
+                                class="absolute right-2 top-2 text-xs bg-gray-700 text-white px-2 py-1 rounded hover:bg-gray-600 z-10"
                               >
                                 Copy
                               </button>
                               <pre
                                 class="bg-gray-900 text-[#1affeb] text-sm p-2 rounded overflow-x-auto font-mono"
-                              ><code>{{ range $item.Snippet.Lines }}<span class="text-gray-500 mr-2">{{ .LineNum }}</span>{{ .Content }}
+                              ><code>{{ range $item.Snippet.Lines }}{{ if .IsMatch }}<span class="bg-yellow-900 bg-opacity-40 block">{{ end }}<span class="text-gray-500 mr-2">{{ .LineNum }}</span>{{ .Content }}{{ if .IsTruncated }}<span class="text-yellow-400"> ⋯</span>{{ end }}{{ if .IsMatch }}</span>{{ end }}
 {{ end }}</code></pre>
                             </div>
+                            {{ end }}
                           </div>
                           {{ end }}
                         </div>
