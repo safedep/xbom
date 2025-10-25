@@ -12,7 +12,7 @@ import (
 )
 
 type HTMLReporterConfig struct {
-	HtmlReportPath      string // Path to save the HTML report
+	HTMLReportPath      string // Path to save the HTML report
 	SnippetBeforeLines  int    // Number of context lines to show before match (default: 3)
 	SnippetAfterLines   int    // Number of context lines to show after match (default: 3)
 	SnippetMaxBytes     int    // Max total bytes for snippet (default: 5120 = 5KB)
@@ -185,11 +185,11 @@ func (r *HTMLReporter) Finish() error {
 		return fmt.Errorf("visualiser is not initialized correctly")
 	}
 
-	if err := r.visualiser.GenerateHtmlFile(r.config.HtmlReportPath); err != nil {
+	if err := r.visualiser.GenerateHtmlFile(r.config.HTMLReportPath); err != nil {
 		return fmt.Errorf("failed to finish HTML report: %w", err)
 	}
 
-	fmt.Println("🔗 You can view the HTML report at:", r.config.HtmlReportPath)
+	fmt.Println("🔗 You can view the HTML report at:", r.config.HTMLReportPath)
 
 	return nil
 }

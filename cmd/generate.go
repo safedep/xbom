@@ -162,7 +162,7 @@ func internalGenerateDirectory(appName, codeDir string) error {
 
 	if htmlReportPath != "" {
 		htmlReporter, err := reporter.NewHTMLReporter(reporter.HTMLReporterConfig{
-			HtmlReportPath: htmlReportPath,
+			HTMLReportPath: htmlReportPath,
 		})
 		if err != nil {
 			return fmt.Errorf("failed to create HTML reporter: %w", err)
