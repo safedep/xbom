@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path"
@@ -78,19 +79,50 @@ func generate() {
 // internalGenerateMulti handles multiple input adapters before invoking the
 // core scanning workflow
 func internalGenerateMulti() error {
-	return internalGenerateDirectory()
-}
+	// Start with different supported adapters based on args
+	if packageURL != "" {
+		return internalGeneratePurl()
+	}
 
-func internalGenerateDirectory() error {
+	// Fallback to the last option ie. local directory
 	if appName == "" {
 		appName = path.Base(codeDirectory)
 	}
 
-	return internalGenerate(appName, codeDirectory)
+	return internalGenerateDirectory(appName, codeDirectory)
+}
+
+// internalGeneratePurl setup a local cache for a package
+// identified by its PURL for scanning. It also cleanup the local
+// cache after the scanning process.
+func internalGeneratePurl() error {
+	pullResponse, err := command.PackagePull(context.Background(), command.PackagePullRequest{
+		PURL: packageURL,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to pull package: %w", err)
+	}
+
+	defer func() {
+		if err := pullResponse.Close(); err != nil {
+			log.Errorf("failed to cleanup package: %v", err)
+		}
+	}()
+
+	localPath, err := pullResponse.LocalPath()
+	if err != nil {
+		return fmt.Errorf("failed to find local path for package: %w", err)
+	}
+
+	if appName == "" {
+		appName = packageURL
+	}
+
+	return internalGenerateDirectory(appName, localPath)
 }
 
 // internalGenerate executes the core scanning workflow to generate an XBOM report
-func internalGenerate(appName, codeDir string) error {
+func internalGenerateDirectory(appName, codeDir string) error {
 	log.Infof("Generating BOM for source - %s", codeDir)
 
 	// provide grouping filters using signatures.LoadSignatures("microsoft", "azure", "servicebus")
