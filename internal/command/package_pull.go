@@ -32,7 +32,7 @@ type PackagePullResponse struct {
 	reader artifactv2.ArtifactReaderV2
 }
 
-// LocalPath returns the local dir path where the artfact was extracted.
+// LocalPath returns the local dir path where the artifact was extracted.
 func (pp *PackagePullResponse) LocalPath() (string, error) {
 	if pp.localDir == "" {
 		return "", fmt.Errorf("no local path available for artifact content")
