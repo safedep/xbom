@@ -52,7 +52,7 @@ func createMockNpmRegistry(t *testing.T, packageData map[string][]byte, statusCo
 		if code, ok := statusCodes[r.URL.Path]; ok {
 			w.WriteHeader(code)
 			if code != http.StatusOK {
-				w.Write([]byte("error"))
+				_, _ = w.Write([]byte("error"))
 				return
 			}
 		}
@@ -61,13 +61,13 @@ func createMockNpmRegistry(t *testing.T, packageData map[string][]byte, statusCo
 		if data, ok := packageData[r.URL.Path]; ok {
 			w.Header().Set("Content-Type", "application/octet-stream")
 			w.WriteHeader(http.StatusOK)
-			w.Write(data)
+			_, _ = w.Write(data)
 			return
 		}
 
 		// Default 404
 		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte("not found"))
+		_, _ = w.Write([]byte("not found"))
 	}))
 }
 
@@ -139,7 +139,7 @@ func TestPackagePull(t *testing.T) {
 				assert.NotEmpty(t, entries)
 
 				// Clean up
-				defer resp.Close()
+				defer func() { _ = resp.Close() }()
 			},
 		},
 		{
@@ -169,7 +169,7 @@ func TestPackagePull(t *testing.T) {
 				assert.True(t, strings.HasPrefix(localPath, baseDir))
 
 				// Clean up
-				defer resp.Close()
+				defer func() { _ = resp.Close() }()
 			},
 		},
 		{
@@ -239,7 +239,7 @@ func TestPackagePull(t *testing.T) {
 				var err error
 				baseDir, err = os.MkdirTemp("", "xbom-test-*")
 				require.NoError(t, err)
-				defer os.RemoveAll(baseDir)
+				defer func() { _ = os.RemoveAll(baseDir) }()
 			}
 
 			// Create custom HTTP client that redirects to mock server

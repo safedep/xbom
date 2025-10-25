@@ -5,12 +5,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestIsDisabled(t *testing.T) {
 	t.Run("returns true if XBOM_DISABLE_TELEMETRY is set to true", func(t *testing.T) {
-		os.Setenv(telemetryDisableEnvKey, "true")
-		defer os.Unsetenv(telemetryDisableEnvKey)
+		err := os.Setenv(telemetryDisableEnvKey, "true")
+		require.NoError(t, err)
+		defer func() { _ = os.Unsetenv(telemetryDisableEnvKey) }()
 
 		assert.True(t, IsDisabled())
 	})
