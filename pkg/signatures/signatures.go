@@ -97,7 +97,7 @@ func LoadSignatures(vendor string, product string, service string) ([]*callgraph
 	return targetSignatures, nil
 }
 
-// Wrapper of LoadSignatures to get all signatures conveniently
+// LoadAllSignatures is a wrapper to get all signatures conveniently
 func LoadAllSignatures() ([]*callgraphv1.Signature, error) {
 	return LoadSignatures("", "", "")
 }

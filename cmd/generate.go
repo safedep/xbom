@@ -133,6 +133,7 @@ func internalGenerateDirectory(appName, codeDir string) error {
 	if err != nil {
 		return fmt.Errorf("failed to load signatures: %w", err)
 	}
+
 	log.Debugf("Loaded %d signatures", len(signaturesToMatch))
 
 	reporters := []reporter.Reporter{}

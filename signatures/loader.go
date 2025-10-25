@@ -1,4 +1,4 @@
-// Package signature contains the out of box signatures and a Go specific loader
+// Package signatures contains the out of box signatures and a Go specific loader
 // for easy use in Go applications.
 package signatures
 
