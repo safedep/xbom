@@ -22,6 +22,7 @@ var (
 	codeDirectory       string
 	cyclonedxReportPath string
 	htmlReportPath      string
+	markdownReportPath  string
 	summaryMaxResults   int
 	summaryNoStats      bool
 	summaryNoColor      bool
@@ -52,6 +53,8 @@ func NewGenerateCommand() *cobra.Command {
 		"Generate CycloneDX BOM to file")
 	cmd.Flags().StringVarP(&htmlReportPath, "report-html", "", "",
 		"Generate HTML report to file")
+	cmd.Flags().StringVarP(&markdownReportPath, "report-markdown", "", "",
+		"Generate Markdown report to file")
 	cmd.Flags().IntVarP(&summaryMaxResults, "summary-limit", "", 20,
 		"Maximum number of results to display in summary (0 for unlimited)")
 	cmd.Flags().BoolVarP(&summaryNoStats, "summary-no-stats", "", false,
@@ -166,6 +169,16 @@ func internalGenerateDirectory(appName, codeDir string) error {
 		reporters = append(reporters, htmlReporter)
 	}
 
+	if markdownReportPath != "" {
+		markdownReporter, err := reporter.NewMarkdownReporter(reporter.MarkdownReporterConfig{
+			OutputPath: markdownReportPath,
+		})
+		if err != nil {
+			return fmt.Errorf("failed to create Markdown reporter: %w", err)
+		}
+		reporters = append(reporters, markdownReporter)
+	}
+
 	workflow := codeanalysis.NewCodeAnalysisWorkflow(
 		codeanalysis.CodeAnalysisWorkflowConfig{
 			Tool:              xbomTool,
@@ -196,10 +209,12 @@ func internalGenerateDirectory(appName, codeDir string) error {
 	}
 
 	// Nudge user to visualise the results
-	if htmlReportPath == "" {
+	if htmlReportPath == "" && markdownReportPath == "" {
 		ui.Println()
-		ui.Println("Tip: You can visualise the report as HTML using \"--report-html\" flag.")
-		ui.Println("Example: xbom generate --report-html /tmp/report.html")
+		ui.Println("Tip: You can save the report to a file using \"--report-html\" or \"--report-markdown\" flags.")
+		ui.Println("Examples:")
+		ui.Println("  xbom generate --report-html /tmp/report.html")
+		ui.Println("  xbom generate --report-markdown /tmp/report.md")
 	}
 
 	return nil
