@@ -7,11 +7,16 @@ import (
 	"os"
 	"strings"
 
+	"github.com/safedep/dry/log"
 	"github.com/safedep/xbom/pkg/common"
 )
 
 type HTMLReporterConfig struct {
-	HtmlReportPath string // Path to save the HTML report
+	HTMLReportPath      string // Path to save the HTML report
+	SnippetBeforeLines  int    // Number of context lines to show before match (default: 3)
+	SnippetAfterLines   int    // Number of context lines to show after match (default: 3)
+	SnippetMaxBytes     int    // Max total bytes for snippet (default: 5120 = 5KB)
+	SnippetMaxLineChars int    // Max characters per line (default: 500)
 }
 
 type HTMLReporter struct {
@@ -22,6 +27,20 @@ type HTMLReporter struct {
 var _ Reporter = (*HTMLReporter)(nil)
 
 func NewHTMLReporter(config HTMLReporterConfig) (*HTMLReporter, error) {
+	// Set defaults for snippet configuration
+	if config.SnippetBeforeLines == 0 {
+		config.SnippetBeforeLines = 3
+	}
+	if config.SnippetAfterLines == 0 {
+		config.SnippetAfterLines = 3
+	}
+	if config.SnippetMaxBytes == 0 {
+		config.SnippetMaxBytes = 5120 // 5KB
+	}
+	if config.SnippetMaxLineChars == 0 {
+		config.SnippetMaxLineChars = 500
+	}
+
 	return &HTMLReporter{
 		config:     config,
 		visualiser: NewHTMLVisualiser([]string{"Signature ID", "Description", "Tags"}),
@@ -66,21 +85,67 @@ func (r *HTMLReporter) RecordCodeAnalysisFindings(codeAnalysisFindings *common.C
 					}
 
 					// Add snippet if available
-					if evidenceMetadata.CallerIdentifierMetadata != nil && strings.TrimSpace(evidenceMetadata.CallerIdentifierContent) != "" {
-						lines := strings.Split(evidenceMetadata.CallerIdentifierContent, "\n")
-						snippetLines := make([]map[string]interface{}, len(lines))
+					if evidenceMetadata.CallerIdentifierMetadata != nil {
 						startLine := int(evidenceMetadata.CallerIdentifierMetadata.StartLine)
+						endLine := int(evidenceMetadata.CallerIdentifierMetadata.EndLine)
 
-						for i, line := range lines {
-							snippetLines[i] = map[string]interface{}{
-								"LineNum": startLine + i + 1,
-								"Content": line,
+						// Try to extract snippet from file with context
+						snippet, err := extractFileSnippet(
+							signatureMatchResult.FilePath,
+							startLine,
+							endLine,
+							r.config.SnippetBeforeLines,
+							r.config.SnippetAfterLines,
+							r.config.SnippetMaxBytes,
+							r.config.SnippetMaxLineChars,
+						)
+
+						// If file extraction fails, fall back to CallerIdentifierContent
+						if err != nil && strings.TrimSpace(evidenceMetadata.CallerIdentifierContent) != "" {
+							lines := strings.Split(evidenceMetadata.CallerIdentifierContent, "\n")
+							snippetLines := make([]map[string]interface{}, len(lines))
+
+							for i, line := range lines {
+								snippetLines[i] = map[string]interface{}{
+									"LineNum":     startLine + i + 1,
+									"Content":     line,
+									"IsMatch":     true,
+									"IsTruncated": false,
+								}
 							}
-						}
 
-						match["Snippet"] = map[string]interface{}{
-							"Lines":      snippetLines,
-							"RawContent": evidenceMetadata.CallerIdentifierContent,
+							match["Snippet"] = map[string]interface{}{
+								"Lines":             snippetLines,
+								"RawContent":        evidenceMetadata.CallerIdentifierContent,
+								"WasTruncated":      false,
+								"SourceUnavailable": false,
+							}
+						} else if err == nil {
+							// Successfully extracted snippet from file
+							snippetLines := make([]map[string]interface{}, len(snippet.Lines))
+							for i, line := range snippet.Lines {
+								snippetLines[i] = map[string]interface{}{
+									"LineNum":     line.LineNum,
+									"Content":     line.Content,
+									"IsMatch":     line.IsMatch,
+									"IsTruncated": line.IsTruncated,
+								}
+							}
+
+							match["Snippet"] = map[string]interface{}{
+								"Lines":             snippetLines,
+								"RawContent":        snippet.RawContent,
+								"WasTruncated":      snippet.WasTruncated,
+								"SourceUnavailable": false,
+							}
+						} else {
+							// File unavailable and no fallback content
+							match["Snippet"] = map[string]interface{}{
+								"Lines":             []map[string]interface{}{},
+								"RawContent":        "",
+								"WasTruncated":      false,
+								"SourceUnavailable": true,
+							}
 						}
 					}
 
@@ -120,11 +185,11 @@ func (r *HTMLReporter) Finish() error {
 		return fmt.Errorf("visualiser is not initialized correctly")
 	}
 
-	if err := r.visualiser.GenerateHtmlFile(r.config.HtmlReportPath); err != nil {
+	if err := r.visualiser.GenerateHtmlFile(r.config.HTMLReportPath); err != nil {
 		return fmt.Errorf("failed to finish HTML report: %w", err)
 	}
 
-	fmt.Println("🔗 You can view the HTML report at:", r.config.HtmlReportPath)
+	fmt.Println("🔗 You can view the HTML report at:", r.config.HTMLReportPath)
 
 	return nil
 }
@@ -183,7 +248,12 @@ func (hv *HTMLVisualiser) GenerateHtmlFile(htmlPath string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+
+	defer func() {
+		if err := f.Close(); err != nil {
+			log.Errorf("failed to close HTML report file: %v", err)
+		}
+	}()
 
 	headers := []string{"Signature_ID", "Description", "Tags"}
 	var rows []map[string]interface{}

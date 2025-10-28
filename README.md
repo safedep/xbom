@@ -17,12 +17,15 @@
 
 ## 🎯 Why xbom?
 
-Modern applications rely on much more than just open-source libraries. They often include:
+Modern applications rely on so much more than just open-source libraries. They often include:
 
 - AI SDKs 🧠
 - ML models 🤖
 - 3rd party SaaS APIs ☁️
 - Cryptographic algorithms 🔑
+
+`xbom` is designed to build comprehensive bill of material (BOM) for software dependencies
+beyond just 3rd party libraries, using semantic code analysis and simple YAML based signatures.
 
 ✅ **Beyond Manifests** - `xbom` builds inventory using actual evidence from your codebase
 

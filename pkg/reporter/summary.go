@@ -212,7 +212,7 @@ func (r *SummaryReporter) Finish() error {
 			yellow := color.New(color.FgYellow).SprintFunc()
 			msg := fmt.Sprintf("%s %s",
 				r.colorize(gray, fmt.Sprintf("... and %d more findings.", truncated)),
-				r.colorize(yellow, "Use --html flag to view all results."))
+				r.colorize(yellow, "Save report to file for all findings"))
 			ui.Println(msg)
 		}
 	} else {
